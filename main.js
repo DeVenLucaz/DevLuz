@@ -551,7 +551,21 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initCardTilt();
   initActiveSectionDetection();
+  initExpandableCards();
 
+
+  // ═══════════════════════════════════════════════════════════════
+  //  EXPANDABLE CARDS LOGIC
+  // ═══════════════════════════════════════════════════════════════
+  function initExpandableCards() {
+    const headers = document.querySelectorAll('.stat-header');
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const card = header.closest('.expandable-card');
+        card.classList.toggle('expanded');
+      });
+    });
+  }
 
   // ═══════════════════════════════════════════════════════════════
   //  CLEANUP ON PAGE UNLOAD
