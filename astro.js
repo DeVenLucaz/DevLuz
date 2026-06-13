@@ -64,12 +64,15 @@
   img.crossOrigin = 'Anonymous';
   img.src = 'astro-inkdrop-reference.png';
   img.onload = () => {
-    imgCanvas.width = img.width;
-    imgCanvas.height = img.height;
-    imgCtx.drawImage(img, 0, 0);
+    const frameWidth = img.width / 4;
+    const frameHeight = img.height;
+    imgCanvas.width = frameWidth;
+    imgCanvas.height = frameHeight;
+    // Draw only the leftmost character (sourceX=0, sourceY=0)
+    imgCtx.drawImage(img, 0, 0, frameWidth, frameHeight, 0, 0, frameWidth, frameHeight);
     
     // Strip white background via color keying
-    const imgData = imgCtx.getImageData(0, 0, img.width, img.height);
+    const imgData = imgCtx.getImageData(0, 0, frameWidth, frameHeight);
     const data = imgData.data;
     for (let i = 0; i < data.length; i += 4) {
       let r = data[i], g = data[i+1], b = data[i+2];
