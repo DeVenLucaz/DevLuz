@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAAYAN बंधन — A Novel by DeVenLucaz</title>
+  <meta name="description" content="DAAYAN बंधन — a bilingual surrealist novel by DeVenLucaz. Read both the Myth and Realistic versions of this literary journey through dreams, doors, and the spaces between worlds." />
+  <meta name="author" content="DeVenLucaz" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400&family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════════ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) var(--bg);
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    /* ═══════════════════════════════════════════════
+       THEME: MYTH VERSION
+       ═══════════════════════════════════════════════ */
+    body[data-version='myth'] {
+      --bg: #06061a;
+      --bg-surface: #0a0a24;
+      --bg-surface-alpha: rgba(10, 10, 36, 0.85);
+      --text: #d4d4e8;
+      --text-dim: #8888a8;
+      --text-heading: #e8e8f4;
+      --accent: #d4a846;
+      --accent-glow: rgba(212, 168, 70, 0.3);
+      --accent-soft: rgba(212, 168, 70, 0.08);
+      --border: rgba(212, 168, 70, 0.15);
+      --border-strong: rgba(212, 168, 70, 0.3);
+      --font-body: 'Cormorant Garamond', serif;
+      --dropcap-shadow: 0 0 40px rgba(212, 168, 70, 0.4);
+      --cover-gradient: radial-gradient(ellipse at 50% 30%, rgba(212, 168, 70, 0.06) 0%, transparent 70%);
+      --particle-color: rgba(212, 168, 70, 0.5);
+      --ornament-opacity: 0.4;
+      --blockquote-border: rgba(212, 168, 70, 0.25);
+      --blockquote-bg: rgba(212, 168, 70, 0.03);
+    }
+
+    /* ═══════════════════════════════════════════════
+       THEME: REALISTIC VERSION
+       ═══════════════════════════════════════════════ */
+    body[data-version='realistic'] {
+      --bg: #0e0c0a;
+      --bg-surface: #1a1614;
+      --bg-surface-alpha: rgba(26, 22, 20, 0.85);
+      --text: #e8e0d4;
+      --text-dim: #a89880;
+      --text-heading: #f0e8dc;
+      --accent: #d4956a;
+      --accent-glow: rgba(212, 149, 106, 0.3);
+      --accent-soft: rgba(212, 149, 106, 0.08);
+      --border: rgba(212, 149, 106, 0.15);
+      --border-strong: rgba(212, 149, 106, 0.3);
+      --font-body: 'Cormorant Garamond', serif;
+      --dropcap-shadow: 0 0 40px rgba(212, 149, 106, 0.35);
+      --cover-gradient: radial-gradient(ellipse at 50% 60%, rgba(212, 149, 106, 0.06) 0%, transparent 70%);
+      --particle-color: rgba(212, 149, 106, 0.3);
+      --ornament-opacity: 0.35;
+      --blockquote-border: rgba(212, 149, 106, 0.25);
+      --blockquote-bg: rgba(212, 149, 106, 0.03);
+    }
+
+    /* ═══════════════════════════════════════════════
+       BODY & TRANSITIONS
+       ═══════════════════════════════════════════════ */
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      line-height: 1.9;
+      overflow-x: hidden;
+      min-height: 100vh;
+      transition: background-color 0.8s ease, color 0.8s ease;
+    }
+
+    /* ═══════════════════════════════════════════════
+       READING PROGRESS BAR
+       ═══════════════════════════════════════════════ */
+    #reading-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-glow));
+      z-index: 200;
+      transition: width 0.1s linear, background 0.8s ease;
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    /* ═══════════════════════════════════════════════
+       TOP BAR
+       ═══════════════════════════════════════════════ */
+    .top-bar {
+      position: fixed;
+      top: 3px;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(16px, 4vw, 40px);
+      background: var(--bg-surface-alpha);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.8s ease, border-color 0.8s ease;
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link .arrow {
+      font-size: 1.1rem;
+      transition: transform 0.3s ease;
+    }
+    .back-link:hover .arrow { transform: translateX(-3px); }
+
+    /* ── Version Toggle ── */
+    .toggle-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .toggle-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: color 0.4s ease;
+      user-select: none;
+      cursor: pointer;
+    }
+    .toggle-label.active { color: var(--accent); }
+    .toggle-label .icon { font-size: 0.85rem; margin-right: 4px; }
+
+    .toggle-switch {
+      position: relative;
+      width: 52px;
+      height: 26px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      cursor: pointer;
+      transition: background 0.4s ease, border-color 0.8s ease;
+      flex-shrink: 0;
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.8s ease;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    body[data-version='realistic'] .toggle-switch::after {
+      transform: translateX(26px);
+    }
+
+    /* ── Reading Info ── */
+    .reading-info {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: color 0.8s ease;
+      min-width: 100px;
+      text-align: right;
+    }
+
+    /* ═══════════════════════════════════════════════
+       COVER / TITLE AREA
+       ═══════════════════════════════════════════════ */
+    .book-cover {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      overflow: hidden;
+    }
+
+    .book-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--cover-gradient);
+      transition: background 0.8s ease;
+      pointer-events: none;
+    }
+
+    /* Star field for Myth version */
+    body[data-version='myth'] .book-cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 40% 35%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1.5px 1.5px at 65% 15%, rgba(212,168,70,0.6), transparent),
+        radial-gradient(1px 1px at 85% 45%, rgba(255,255,255,0.35), transparent),
+        radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1.5px 1.5px at 10% 80%, rgba(212,168,70,0.4), transparent),
+        radial-gradient(1px 1px at 50% 70%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 70% 85%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1.5px 1.5px at 90% 25%, rgba(212,168,70,0.5), transparent),
+        radial-gradient(1px 1px at 35% 90%, rgba(255,255,255,0.35), transparent),
+        radial-gradient(1px 1px at 55% 50%, rgba(255,255,255,0.25), transparent),
+        radial-gradient(1.5px 1.5px at 80% 65%, rgba(212,168,70,0.35), transparent);
+      opacity: 1;
+      animation: starPulse 6s ease-in-out infinite alternate;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+
+    body[data-version='realistic'] .book-cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 80%, rgba(212,149,106,0.04) 0%, transparent 60%);
+      opacity: 1;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+
+    @keyframes starPulse {
+      0% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+
+    .cover-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cover-title-hindi {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: clamp(4rem, 12vw, 9rem);
+      font-weight: 700;
+      color: var(--text-heading);
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      transition: color 0.8s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .cover-subtitle {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 400;
+      color: var(--accent);
+      margin-top: 8px;
+      letter-spacing: 0.1em;
+      transition: color 0.8s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .cover-english {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(0.6rem, 1.5vw, 0.85rem);
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 32px;
+      transition: color 0.8s ease;
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    /* ── Ornament ── */
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 32px auto;
+      width: 200px;
+      opacity: 0;
+    }
+    .ornament::before,
+    .ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent));
+      opacity: var(--ornament-opacity);
+      transition: opacity 0.8s ease;
+    }
+    .ornament::after {
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .ornament .diamond {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      transform: rotate(45deg);
+      margin: 0 12px;
+      opacity: var(--ornament-opacity);
+      transition: opacity 0.8s ease;
+    }
+
+    .cover-author {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-top: 8px;
+      letter-spacing: 0.05em;
+      transition: color 0.8s ease;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .cover-version-hint {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 20px;
+      padding: 6px 20px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: color 0.8s ease, border-color 0.8s ease;
+      opacity: 0;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: scrollFade 2.5s ease-in-out infinite;
+      animation-delay: 2s;
+      transition: color 0.8s ease;
+    }
+    .scroll-hint .scroll-arrow {
+      width: 20px;
+      height: 20px;
+      border-right: 1.5px solid var(--text-dim);
+      border-bottom: 1.5px solid var(--text-dim);
+      transform: rotate(45deg);
+      animation: scrollBounce 2.5s ease-in-out infinite;
+      animation-delay: 2s;
+      transition: border-color 0.8s ease;
+    }
+    @keyframes scrollFade {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(6px); }
+    }
+
+    /* ═══════════════════════════════════════════════
+       CHAPTER NAV (SIDE PANEL)
+       ═══════════════════════════════════════════════ */
+    .chapter-nav {
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 16px 8px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .chapter-nav.visible { opacity: 1; }
+
+    .chapter-nav-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-dim);
+      opacity: 0.3;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .chapter-nav-dot:hover {
+      opacity: 0.8;
+      transform: scale(1.5);
+    }
+    .chapter-nav-dot.active {
+      background: var(--accent);
+      opacity: 1;
+      box-shadow: 0 0 10px var(--accent-glow);
+      transform: scale(1.6);
+    }
+    .chapter-nav-dot .dot-label {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      transform: translateY(-50%) translateX(-5px);
+    }
+    .chapter-nav-dot:hover .dot-label {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    /* ═══════════════════════════════════════════════
+       BOOK CONTENT
+       ═══════════════════════════════════════════════ */
+    .book-content {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px clamp(20px, 6vw, 60px) 120px;
+      transition: opacity 0.4s ease;
+    }
+
+    .book-content.fade-out { opacity: 0; }
+    .book-content.fade-in { opacity: 1; }
+
+    /* ── Section: About / Characters / Note ── */
+    .book-section {
+      margin-bottom: 80px;
+    }
+
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      transition: color 0.8s ease;
+    }
+
+    .section-text {
+      font-size: 1.15rem;
+      line-height: 2;
+      color: var(--text);
+      transition: color 0.8s ease;
+    }
+
+    .section-text p {
+      margin-bottom: 1.2em;
+      text-indent: 0;
+    }
+
+    .section-text p + p {
+      text-indent: 1.5em;
+    }
+
+    .section-text em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* ── Chapter Headings ── */
+    .chapter-heading {
+      margin-top: 100px;
+      margin-bottom: 12px;
+      padding-top: 40px;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-heading);
+      transition: color 0.8s ease;
+    }
+
+    .chapter-subtitle {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+      transition: color 0.8s ease;
+    }
+
+    .chapter-english-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-bottom: 48px;
+      transition: color 0.8s ease;
+    }
+
+    /* ── Section Divider ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 60px auto;
+      width: 120px;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-strong);
+      transition: background 0.8s ease;
+    }
+    .section-divider .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin: 0 10px;
+      transition: background 0.8s ease;
+    }
+
+    /* ── Chapter Prose ── */
+    .chapter-prose {
+      font-size: 1.15rem;
+      line-height: 2;
+      color: var(--text);
+      transition: color 0.8s ease;
+    }
+
+    .chapter-prose p {
+      margin-bottom: 1.2em;
+    }
+
+    .chapter-prose p + p {
+      text-indent: 1.5em;
+    }
+
+    .chapter-prose .first-para {
+      text-indent: 0;
+    }
+
+    .chapter-prose .first-para::first-letter {
+      float: left;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 3.5em;
+      line-height: 0.8;
+      padding-right: 12px;
+      padding-top: 6px;
+      color: var(--accent);
+      text-shadow: var(--dropcap-shadow);
+      transition: color 0.8s ease, text-shadow 0.8s ease;
+    }
+
+    /* ── Blockquotes ── */
+    .chapter-prose blockquote {
+      margin: 2em 0;
+      padding: 1.2em 1.5em;
+      border-left: 3px solid var(--blockquote-border);
+      background: var(--blockquote-bg);
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      color: var(--text);
+      transition: border-color 0.8s ease, background 0.8s ease, color 0.8s ease;
+    }
+
+    .chapter-prose blockquote p {
+      text-indent: 0;
+      margin-bottom: 0.5em;
+    }
+    .chapter-prose blockquote p:last-child { margin-bottom: 0; }
+
+    /* ── Hindi text ── */
+    .hindi {
+      font-family: 'Noto Serif Devanagari', serif;
+    }
+
+    /* ── Sub-section heading ── */
+    .sub-section-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin: 60px 0 32px;
+      text-align: center;
+      transition: color 0.8s ease;
+    }
+
+    /* ── Character Cards ── */
+    .character-card {
+      margin-bottom: 40px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--accent-soft);
+      transition: border-color 0.8s ease, background 0.8s ease;
+    }
+    .character-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+      transition: color 0.8s ease;
+    }
+    .character-name-hindi {
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      transition: color 0.8s ease;
+    }
+    .character-desc {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text);
+      transition: color 0.8s ease;
+    }
+
+    /* ── Continue Reading ── */
+    .continue-reading {
+      text-align: center;
+      margin-top: 80px;
+      padding: 40px 0;
+    }
+    .continue-reading p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--text-dim);
+      transition: color 0.8s ease;
+    }
+    .continue-reading .coming-soon {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 12px;
+      transition: color 0.8s ease;
+    }
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════ */
+    .book-footer {
+      text-align: center;
+      padding: 80px 24px 60px;
+      border-top: 1px solid var(--border);
+      transition: border-color 0.8s ease;
+    }
+    .footer-end {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+      transition: color 0.8s ease;
+    }
+    .footer-author {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 32px;
+      transition: color 0.8s ease;
+    }
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+      padding: 10px 24px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .footer-link:hover {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    /* ═══════════════════════════════════════════════
+       ATMOSPHERIC PARTICLES (MYTH)
+       ═══════════════════════════════════════════════ */
+    #particles-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+      transition: opacity 0.8s ease;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: var(--particle-color);
+      opacity: 0;
+      animation: particleFloat linear infinite;
+    }
+
+    @keyframes particleFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(0) translateX(0);
+      }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.3; }
+      100% {
+        opacity: 0;
+        transform: translateY(-100vh) translateX(30px);
+      }
+    }
+
+    /* ── Warm grain overlay (Realistic) ── */
+    body[data-version='realistic'] #grain-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+    }
+
+    body[data-version='myth'] #grain-overlay {
+      opacity: 0;
+    }
+
+    /* ═══════════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .chapter-nav { display: none; }
+
+      .top-bar {
+        height: 48px;
+        padding: 0 12px;
+      }
+
+      .reading-info { display: none; }
+
+      .toggle-label { font-size: 0.6rem; }
+      .toggle-label .icon { display: none; }
+
+      .toggle-switch {
+        width: 44px;
+        height: 22px;
+      }
+      .toggle-switch::after {
+        width: 14px;
+        height: 14px;
+      }
+      body[data-version='realistic'] .toggle-switch::after {
+        transform: translateX(22px);
+      }
+
+      .book-content {
+        padding: 24px 18px 100px;
+      }
+
+      .chapter-prose { font-size: 1.05rem; line-height: 1.85; }
+
+      .chapter-prose .first-para::first-letter {
+        font-size: 2.8em;
+      }
+
+      .character-card { padding: 20px; }
+
+      .cover-title-hindi { font-size: clamp(3rem, 14vw, 5rem); }
+    }
+
+    @media (max-width: 480px) {
+      body { font-size: 1rem; }
+      .chapter-heading { font-size: 1.2rem; }
+      .book-content { padding: 16px 14px 80px; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       ANIMATIONS
+       ═══════════════════════════════════════════════ */
+    .animate-in {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
+</head>
+
+<body data-version="myth">
+
+  <!-- ── Reading Progress Bar ── -->
+  <div id="reading-progress"></div>
+
+  <!-- ── Atmospheric layers ── -->
+  <div id="particles-container" aria-hidden="true"></div>
+  <div id="grain-overlay" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════
+       TOP BAR
+       ══════════════════════════════════════════════ -->
+  <nav class="top-bar" role="navigation" aria-label="Book navigation">
+    <a href="index.html" class="back-link" id="back-link">
+      <span class="arrow">←</span>
+      <span>Portfolio</span>
+    </a>
+
+    <div class="toggle-wrapper">
+      <span class="toggle-label active" id="label-myth" data-version="myth">
+        <span class="icon">✧</span>Myth
+      </span>
+      <div class="toggle-switch" id="version-toggle" role="switch" aria-checked="false" aria-label="Toggle between Myth and Realistic versions" tabindex="0"></div>
+      <span class="toggle-label" id="label-realistic" data-version="realistic">
+        Realistic<span class="icon">◉</span>
+      </span>
+    </div>
+
+    <div class="reading-info" id="reading-info">
+      <span id="reading-percent">0%</span> read
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════
+       CHAPTER NAV (SIDE)
+       ══════════════════════════════════════════════ -->
+  <div class="chapter-nav" id="chapter-nav" aria-label="Chapter navigation"></div>
+
+  <!-- ══════════════════════════════════════════════
+       BOOK COVER
+       ══════════════════════════════════════════════ -->
+  <header class="book-cover" id="book-cover">
+    <div class="cover-content">
+      <h1 class="cover-title-hindi hindi" id="cover-title">दायन</h1>
+      <div class="cover-subtitle hindi" id="cover-subtitle">बंधन</div>
+      <div class="cover-english" id="cover-english">DAAYAN Bandhan</div>
+
+      <div class="ornament" id="cover-ornament">
+        <span class="diamond"></span>
+      </div>
+
+      <div class="cover-author" id="cover-author">A Novel by DeVenLucaz</div>
+      <div class="cover-version-hint" id="cover-version-hint">Currently Reading: Myth Version</div>
+    </div>
+
+    <div class="scroll-hint" id="scroll-hint">
+      <span>Begin Reading</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════
+       MYTH VERSION CONTENT
+       ══════════════════════════════════════════════ -->
+  <main id="myth-content" class="book-content">
+
+    <!-- ── About This Book ── -->
+    <section class="book-section" id="myth-about">
+      <div class="section-label">About This Book</div>
+      <div class="section-text">
+        <p>He woke up in a garden that should not exist.</p>
+        <p>Five doors. Five worlds. Each one shaped like someone he thought he knew — a mother, a lover, a stranger, a god, a self he never chose to become. Behind every door, a woman waits. Not a woman in the ordinary sense. Something older. Something that wears the shape of a woman the way water wears the shape of whatever holds it.</p>
+        <p>This is the myth version of the story — where the boundaries between dream and waking have dissolved entirely, and the protagonist must navigate a garden of impossible architecture, each path leading deeper into the mythology of desire, guilt, and transformation.</p>
+        <p>The Hindi word <em class="hindi">दायन</em> means witch, but not the kind that Western fairy tales give you. A daayan is a spirit of unfinished longing. She does not haunt because she is evil. She haunts because something was never completed — a love, a life, a sentence left mid-word. <em class="hindi">बंधन</em> means binding, bondage, the ties that hold a soul in place.</p>
+        <p>This novel is about the space between being bound and choosing to stay.</p>
+      </div>
+    </section>
+
+    <div class="section-divider"><span class="dot"></span></div>
+
+    <!-- ── Characters ── -->
+    <section class="book-section" id="myth-characters">
+      <div class="section-label">Characters</div>
+
+      <div class="character-card">
+        <div class="character-name">PRUTHVI</div>
+        <div class="character-name-hindi hindi">पृथ्वी</div>
+        <div class="character-desc">
+          A man who wakes in a garden he cannot explain. He carries no memory of how he arrived, only the certainty that he has been here before. In the Myth version, Pruthvi is not entirely human — he is something between a pilgrim and a question mark, moving through spaces that reshape themselves around his fears. The garden responds to him. The doors know his name. He is not the hero of this story. He is its territory.
+        </div>
+      </div>
+
+      <div class="character-card">
+        <div class="character-name">DAAYAN</div>
+        <div class="character-name-hindi hindi">दायन</div>
+        <div class="character-desc">
+          She has many faces and none of them are lies. In this version, the Daayan is not one woman but a presence that fractures across five doors — mother, lover, destroyer, creator, mirror. She speaks in riddles not because she is cryptic but because truth, at certain depths, becomes non-linear. She has been waiting in this garden longer than the garden has existed. She is the garden.
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"><span class="dot"></span></div>
+
+    <!-- ── Author's Note ── -->
+    <section class="book-section" id="myth-note">
+      <div class="section-label">Author's Note</div>
+      <div class="section-text">
+        <p>I did not set out to write two versions of the same story. The novel began as one thing — a surrealist fable about a man in a garden — and somewhere during the third rewrite, it fractured. Not broke. Fractured, the way light fractures through a prism: same source, different spectrums.</p>
+        <p>The Myth version is the dream. It is what happens when you stop asking "is this real?" and start asking "what does this mean?" Every garden, every door, every woman behind every door — they are all metaphors, but they are also all <em>real</em> within the logic of the text. This version does not care about realism. It cares about emotional precision.</p>
+        <p>Read whichever version calls to you. They are the same story. They are not the same story at all.</p>
+      </div>
+    </section>
+
+    <div class="section-divider"><span class="dot"></span></div>
+
+    <!-- ── PROLOGUE ── -->
+    <section class="book-section" id="myth-prologue">
+      <h2 class="chapter-heading" data-chapter="prologue">Prologue</h2>
+      <div class="chapter-subtitle hindi">बीज</div>
+      <div class="chapter-english-subtitle">The Seed</div>
+
+      <div class="chapter-prose">
+        <p class="first-para">I did not arrive here.</p>
+
+        <p>This is the first thing I can tell you with any certainty: I did not arrive at this garden the way people arrive at places. There was no journey. There was no door I chose to open. One moment there was the ordinary dark behind my eyes, and then there was this — silver mist at knee height, grass so cold it felt like intention, and a sky that had too many stars to be accidental.</p>
+
+        <p>I was lying on my back. I remember that.</p>
+
+        <p>The mist moved the way water moves when something large has just disturbed it — settling slowly, as though whatever had been displaced was still deciding where to rest.</p>
+
+        <p>The garden was vast. Not vast in the way fields are vast, where you can see the edge if you squint. Vast in the way that certain silences are vast — you know there is more of it than you can perceive, and the parts you cannot perceive are watching you perceive the parts you can.</p>
+
+        <p>I sat up. The mist parted around my waist like a curtain being drawn by invisible hands. My clothes were not mine. Or rather — they were mine, but from a version of myself I did not remember being. Linen. Off-white. The kind of fabric that suggests a decision was made on your behalf, and the decision was <em>simplicity</em>.</p>
+
+        <p>Five paths. That was the next thing I noticed. Five paths radiating outward from where I sat, each one made of a different material — one of crushed silver stone, one of dark wet earth, one of wooden planks that smelled of rain, one of something that looked like solidified moonlight, and one that was just… absence. A gap in the grass. A suggestion of direction.</p>
+
+        <p>At the end of each path, barely visible through the mist, a door. Five doors. Each a different color, a different shape, standing alone in the garden with no walls on either side, no buildings behind them. Just doors. Frames and hinges and the promise of elsewhere.</p>
+
+        <p>I should have been afraid. I understand this now — retrospectively, with the kind of clarity that only comes after you have walked through all five and come back to the center changed in ways you cannot undo. I should have felt the animal panic of displacement, the vertigo of waking in a place that does not match any coordinate your body knows.</p>
+
+        <p>But I felt none of that. What I felt was recognition. Not the sharp recognition of "I have been here before," but the slow, subterranean recognition of a dream remembering itself. As though this garden had always existed somewhere in the architecture of my sleep, and I had simply, finally, fallen deep enough to reach it.</p>
+
+        <p>The stars above me were not stars. I understood this slowly. They were too bright, too deliberate in their arrangement. Constellations that formed not animals or mythological figures but <em>words</em> — Hindi words, Devanagari script written in light across a sky that was more concept than atmosphere. I could not read them. The letters were familiar but the language they spoke was older than the script that carried them.</p>
+
+        <p>A wind came. Not from any direction — from the ground up, as though the earth itself was exhaling. It carried a sound. Not music, not voice. Something between the two. A frequency that my ears received as melody but my chest received as pressure. A hum. A name being spoken by something that did not have a mouth.</p>
+
+        <p>I stood. The mist rearranged itself around my ankles, forming patterns I would later recognize as maps — maps of the five worlds behind the five doors, drawn in vapor and erased by the next breath of that upward wind.</p>
+
+        <p>I did not choose a door. Not that first time. That first time, I stood in the center and let the garden look at me, the way you let a strange animal approach you — motionless, unbreathing, aware that the wrong movement would end something before it began.</p>
+
+        <blockquote>
+          <p>The garden breathed.</p>
+          <p>The doors waited.</p>
+          <p>And somewhere behind the farthest one — the one made of absence, the one that was less a door than a wound in the air — something that was not a woman and not a goddess and not a memory but all three at once…</p>
+          <p>She opened her eyes.</p>
+        </blockquote>
+
+        <p>That was the beginning. Or rather — that was where I began to notice that something had begun long before I woke up in the mist with stars writing unreadable scripture above me and five paths asking five different versions of the same question:</p>
+
+        <p><em>Which version of the truth can you survive?</em></p>
+      </div>
+    </section>
+
+    <div class="section-divider"><span class="dot"></span></div>
+
+    <!-- ── Continue ── -->
+    <div class="continue-reading">
+      <p>Continue reading…</p>
+      <div class="coming-soon">Full novel coming soon</div>
+    </div>
+  </main>
+
+  <!-- ══════════════════════════════════════════════
+       REALISTIC VERSION CONTENT
+       ══════════════════════════════════════════════ -->
+  <main id="realistic-content" class="book-content" style="display: none;">
+
+    <!-- ── About This Book ── -->
+    <section class="book-section" id="real-about">
+      <div class="section-label">About This Book</div>
+      <div class="section-text">
+        <p>He did not plan any of it.</p>
+        <p>Not the first night. Not the years that followed. Not the women — though calling them "the women" makes it sound like there was a pattern, and there was no pattern. There was Pruthvi, and there was Pune at 4 AM, and there was the particular kind of loneliness that does not announce itself as loneliness but as <em>curiosity</em>.</p>
+        <p>This is the realistic version. No gardens, no silver mist, no mythology. Just a man working the night shift in a city that transforms after midnight. The women he meets are not spirits or goddesses — they are people, as complicated and contradictory as people actually are. The magic, if there is any, is in the spaces between conversations. In the things that go unsaid at 3 AM in an office corridor. In the specific sound of an autorickshaw engine at 4:30 AM when the streets are empty and the sky is that particular shade of pre-dawn gray that makes everything feel provisional.</p>
+        <p>The word <em class="hindi">दायन</em> here does not mean witch. It means the woman who stays in your head after she has left the room. The one whose absence is louder than anyone else's presence. <em class="hindi">बंधन</em> is still binding — but the ropes are made of habit, nostalgia, and the specific gravity of shared silence.</p>
+        <p>This novel is about the ordinary ways we haunt each other.</p>
+      </div>
+    </section>
+
+    <div class="section-divider"><span class="dot"></span></div>
+
+    <!-- ── Characters ── -->
+    <section class="book-section" id="real-characters">
+      <div class="section-label">Characters</div>
+
+      <div class="character-card">
+        <div class="character-name">PRUTHVI</div>
+        <div class="character-name-hindi hindi">पृथ्वी</div>
+        <div class="character-desc">
+          Twenty-six years old. Works the night shift at a tech company in Hinjewadi, Pune. Drinks too much tea and not enough water. Has the particular kind of intelligence that is excellent at solving problems that do not matter and terrible at solving the ones that do. Grew up in a family that communicated through silence and is now trying, badly, to learn how to say things out loud. He is not special. That is the point.
+        </div>
+      </div>
+
+      <div class="character-card">
+        <div class="character-name">DAAYAN</div>
+        <div class="character-name-hindi hindi">दायन</div>
+        <div class="character-desc">
+          Not one woman. In this version, Daayan is a title Pruthvi gives — privately, never out loud — to the women who change the texture of his nights. A colleague who smokes on the fire escape at 2 AM. A stranger at a tea stall who quotes Faiz. A friend's girlfriend who understands him better than the friend does. They are all real, all flawed, all eventually gone. The "binding" is what remains after they leave.
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"><span class="dot"></span></div>
+
+    <!-- ── Author's Note ── -->
+    <section class="book-section" id="real-note">
+      <div class="section-label">Author's Note</div>
+      <div class="section-text">
+        <p>The Realistic version is the one that happened. Or close enough to what happened that the distance between fiction and memory has become academic.</p>
+        <p>I wrote this version because the Myth version, for all its beauty, is a translation. This is the source text. These are the actual 4 AM corridors, the actual tea stalls, the actual silences that I later dressed up in mist and metaphor. Every surreal garden is, at bottom, an office parking lot at 3 AM. Every five-doored mystery is, at bottom, a series of conversations with people who mattered more than they should have.</p>
+        <p>This version is less beautiful. It is more true. Whether that is a worthwhile trade is for you to decide.</p>
+      </div>
+    </section>
+
+    <div class="section-divider"><span class="dot"></span></div>
+
+    <!-- ── CHAPTER ONE ── -->
+    <section class="book-section" id="real-chapter-1">
+      <h2 class="chapter-heading" data-chapter="chapter-1">Chapter One</h2>
+      <div class="chapter-subtitle hindi">पहली बार</div>
+      <div class="chapter-english-subtitle">The First Time</div>
+
+      <div class="sub-section-heading">— 1.1 — The Igloo and the Night —</div>
+
+      <div class="chapter-prose">
+        <p class="first-para">There is a version of Pune that most people never see.</p>
+
+        <p>Not because it is hidden — it is right there, on the same roads, in the same buildings. But it only exists between 1 AM and 5 AM, and most people are asleep for it. The Night Pune. The one where the autorickshaws run on meter without argument because there is no traffic to justify surge pricing and no other passengers to poach. The one where the chai tapris that close at midnight reopen at 3:30 AM for the cab drivers and the security guards and the specific category of IT workers who have made the night shift their permanent address.</p>
+
+        <p>Pruthvi had been working nights for eleven months. Not by choice — the project demanded US-hours overlap, and he was junior enough that his preferences occupied negative space in the team's planning spreadsheet. But somewhere around month four, the resentment had curdled into something else. Not affection, exactly. Familiarity. The way you stop noticing a scar after enough years.</p>
+
+        <p>The office was called The Igloo. Not officially — officially it was Building 7B, Zensar Complex, Hinjewadi Phase II. But someone had cranked the air conditioning to arctic levels during the monsoon of 2019 and never turned it back down, and the name had fossilized into fact. You could see your breath in the server room. People kept blankets at their desks. The security guard at the lobby entrance wore a muffler in July.</p>
+
+        <p>At 2:47 AM on a Wednesday in October, Pruthvi was sitting in the cafeteria on the third floor, eating Maggi that the night-shift cook had made with a criminal amount of butter, when he heard a sound that did not belong to the building's usual nocturnal vocabulary.</p>
+
+        <p>Laughter. Actual laughter — not the performative laugh-track that accompanied conference calls with American clients, but the unguarded, involuntary kind. The kind that means someone has been genuinely surprised by joy.</p>
+
+        <p>It was coming from the fire escape.</p>
+
+        <p>He should not have followed it. He was not a person who followed sounds. He was a person who noticed sounds, catalogued them privately, and returned to his Maggi. But the laughter had a quality to it — a specific frequency — that his body responded to before his mind could file an objection. He was standing up. He was walking toward the fire escape door. He was pushing it open.</p>
+
+        <p>She was sitting on the concrete steps, three flights up from where he stood, with a cigarette in one hand and a phone in the other. The phone was playing something — not music, but what sounded like a stand-up comedy clip in Hindi. She was laughing at it alone, in a stairwell, at nearly 3 AM, and the laughter echoed off the concrete walls and multiplied until it sounded like a small audience.</p>
+
+        <p>She noticed him before he could decide whether to speak or retreat.</p>
+
+        <blockquote>
+          <p>"You're the Maggi guy," she said. Not a question.</p>
+          <p>"I— what?"</p>
+          <p>"Third floor cafeteria. You eat Maggi every night at the same time. The cook knows your order. I've seen you."</p>
+        </blockquote>
+
+        <p>He stood there, holding the fire escape door open with one hand, the fluorescent light from the corridor cutting a rectangle of cold white across the concrete steps. She was maybe twenty-four. Dark hair pulled back in what had probably started the shift as a neat ponytail and was now closer to a suggestion. Company ID badge clipped to a kurta that was too nice for a night shift — the kind of kurta you wear when you have somewhere to go after work, or when you have just come from somewhere you don't want to explain.</p>
+
+        <p>"I'm Pruthvi," he said, because it was the only thing he was certain of.</p>
+
+        <p>"I know," she said. "Your name is on the Maggi order. The cook writes names on the packets." She took a drag of her cigarette. "I'm Anya. And before you ask — no, I am not from your team. I'm from the design floor. Fourth. We never overlap except in stairwells and vending machine queues."</p>
+
+        <p>That was how it started. Not with a door. Not with a garden. With Maggi, and a fire escape, and a woman who already knew his name from a packet label. The most ordinary beginning to the least ordinary year of his life.</p>
+
+        <p>They talked for forty-seven minutes. He would later know this because his manager would ping him at 3:34 AM asking about a deployment, and the timestamp would become a fossil in his memory — the exact minute the conversation was interrupted. They talked about nothing important and everything that mattered: why the night shift makes you philosophical, whether Pune was a city or a collection of neighborhoods pretending to be a city, the specific loneliness of being awake when everyone you love is asleep.</p>
+
+        <p>She said a thing that stayed.</p>
+
+        <blockquote>
+          <p>"The night shift doesn't just change your schedule. It changes your species. You become nocturnal, and nocturnal people think differently. Daylight people think in straight lines — cause, effect, conclusion. Night people think in circles. You end up where you started, but the scenery is different."</p>
+        </blockquote>
+
+        <p>He went back to his desk. She went back to hers. The building hummed its mechanical lullaby — air conditioning, server fans, the distant thrum of generators that kept The Igloo frozen even when the power grid flickered. And Pruthvi sat in front of his monitor, the deployment waiting for his attention, and realized that something had shifted. Not dramatically — no thunderbolt, no cinematic revelation. Just a small recalibration. Like adjusting the focus on a camera lens you didn't know was blurry.</p>
+
+        <p>He would see her again the next night. And the night after. And the sixty-three nights after that, until she transferred to the Bangalore office and left behind nothing but a half-empty pack of Gold Flake Kings on the fire escape and a silence so specific it had a shape.</p>
+
+        <p>But that was later. That first night, all he knew was this: there was a woman in a stairwell who laughed like the sound was a gift she was giving to the concrete, and the concrete, for once, was grateful.</p>
+      </div>
+    </section>
+
+    <div class="section-divider"><span class="dot"></span></div>
+
+    <!-- ── Continue ── -->
+    <div class="continue-reading">
+      <p>Continue reading…</p>
+      <div class="coming-soon">Full novel coming soon</div>
+    </div>
+  </main>
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER
+       ══════════════════════════════════════════════ -->
+  <footer class="book-footer">
+    <div class="ornament" style="opacity: var(--ornament-opacity); margin-bottom: 24px;">
+      <span class="diamond"></span>
+    </div>
+    <div class="footer-end">End of Preview</div>
+    <div class="footer-author">Written by DeVenLucaz</div>
+    <a href="index.html" class="footer-link">
+      <span>←</span>
+      Return to Portfolio
+    </a>
+  </footer>
+
+  <script src="daayan.js"></script>
+</body>
+</html>

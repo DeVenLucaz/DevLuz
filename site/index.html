@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>DeVenLucaz — Vibe-Coder, Builder, Storyteller</title>
+  <meta name="description" content="Portfolio of DeVenLucaz. 7 projects shipped from an Android phone. No PC. No IDE. No excuses." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="DeVenLucaz — Vibe-Coder, Builder, Storyteller" />
+  <meta property="og:description" content="7 projects shipped from an Android phone. No PC. No IDE. No excuses." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://devenlucaz.github.io/DevLuz/" />
+
+  <!-- Favicon — Cyan Drop SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%2300e5ff'/></svg>" />
+
+  <!-- Google Fonts — Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ========== Noise Overlay ========== -->
+  <div class="noise-overlay"></div>
+
+  <!-- ========== Ambient Gradient Orbs ========== -->
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+  <div class="gradient-orb orb-3"></div>
+
+  <!-- ========== Loader ========== -->
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-glow"></div>
+      <span class="loader-text">DEVENLUCAZ</span>
+    </div>
+  </div>
+
+  <!-- ========== Custom Cursor ========== -->
+  <div id="cursor-glow"></div>
+
+  <!-- ========== Three.js Mascot Container ========== -->
+  <div id="astro-container"></div>
+
+  <!-- ========== Navigation ========== -->
+  <nav id="main-nav">
+    <a href="#hero" class="nav-logo">
+      <span class="logo-accent">DeVen</span>Lucaz
+    </a>
+    <div class="nav-links">
+      <a href="#projects">Work</a>
+      <a href="#about">About</a>
+      <a href="daayan.html">DAAYAN</a>
+      <a href="https://github.com/DeVenLucaz" target="_blank" rel="noopener noreferrer" class="nav-external">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <!-- ========== Hero Section ========== -->
+  <section id="hero">
+    <!-- Particle canvas — driven by main.js -->
+    <canvas id="hero-particles"></canvas>
+
+    <div class="hero-content">
+      <!-- Eyebrow -->
+      <span class="hero-eyebrow">PORTFOLIO / 2024–2025</span>
+
+      <!-- Title -->
+      <h1 class="hero-title">
+        <span>DEVEN</span>
+        <span>LUCAZ</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="hero-subtitle">Vibe-coder. Fiction writer. Phone-only builder.</p>
+
+      <!-- Terminal -->
+      <span class="hero-terminal">
+        <span class="terminal-prompt">$</span> building everything on an android phone<span class="terminal-cursor">_</span>
+      </span>
+
+      <!-- CTAs -->
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">See The Work</a>
+        <a href="daayan.html" class="btn-outline">Read DAAYAN</a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator" id="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ========== Constraint Section ========== -->
+  <section id="constraint">
+    <div class="container">
+      <span class="section-label reveal">THE CONSTRAINT</span>
+
+      <h2 class="constraint-statement reveal reveal-delay-1">No PC. No IDE. No excuses.</h2>
+
+      <p class="constraint-desc reveal reveal-delay-2">
+        Everything you see here — every app, every game, every line of code — was built entirely on an Android phone using Termux. No laptop. No desktop. No 32GB RAM machine with three monitors. The phone is the dev environment, the test device, and the deployment pipeline. Simultaneously.
+      </p>
+
+      <!-- Stats -->
+      <div class="stat-grid">
+        <div class="stat-card reveal reveal-delay-1">
+          <div class="stat-number">7</div>
+          <div class="stat-label">Projects Shipped</div>
+        </div>
+        <div class="stat-card reveal reveal-delay-2">
+          <div class="stat-number">0</div>
+          <div class="stat-label">Computers Used</div>
+        </div>
+        <div class="stat-card reveal reveal-delay-3">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Android Phone</div>
+        </div>
+      </div>
+
+      <!-- Termux window mockup -->
+      <div class="termux-window reveal reveal-delay-2">
+        <div class="termux-titlebar">
+          <span class="termux-dot red"></span>
+          <span class="termux-dot yellow"></span>
+          <span class="termux-dot green"></span>
+          <span class="termux-title">termux — ~/projects</span>
+        </div>
+        <div class="termux-body">
+          <div><span class="prompt">~/projects $</span> <span class="command">ls</span></div>
+          <div><span class="output">DosCom/&nbsp;&nbsp;llamdrop/&nbsp;&nbsp;MinePath/&nbsp;&nbsp;FactRadar/</span></div>
+          <div><span class="output">Lok.AI/&nbsp;&nbsp;Vernux/&nbsp;&nbsp;DAAYAN/</span></div>
+          <br />
+          <div><span class="prompt">~/projects $</span> <span class="command">neofetch --phone</span></div>
+          <div><span class="key">Device:</span> <span class="value">Android | Termux | One Phone</span></div>
+          <div><span class="key">Stack:</span> <span class="value">Kotlin · React · Python · Node.js</span></div>
+          <div><span class="key">Tools:</span> <span class="value">Antigravity CLI · Claude · GitHub Actions</span></div>
+          <div><span class="key">Status:</span> <span class="status-active">Shipping</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Projects Section ========== -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">THE WORK</span>
+        <h2 class="section-title">Seven projects. One phone.</h2>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- ── Card 1: DosCom (FEATURED) ── -->
+        <article class="project-card featured accent-violet reveal reveal-delay-1">
+          <div class="project-header">
+            <span class="project-icon">🐙</span>
+            <span class="project-status">v2.4.5</span>
+          </div>
+          <h3 class="project-title">DosCom</h3>
+          <p class="project-desc">
+            A floating Android companion with its own brain. Not an assistant — a creature. Spiking Neural Network makes every install unique. Mime movement, toy box, emotional memory. Drawn entirely in code — no image assets.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Kotlin</span>
+            <span class="project-tag">Canvas</span>
+            <span class="project-tag">SNN</span>
+            <span class="project-tag">Gemini API</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/DeVenLucaz/DosCom" target="_blank" rel="noopener noreferrer" class="project-link">
+              GitHub <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- ── Card 2: llamdrop ── -->
+        <article class="project-card accent-green reveal reveal-delay-2">
+          <div class="project-header">
+            <span class="project-icon">🦙</span>
+            <span class="project-status">v0.9.5</span>
+          </div>
+          <h3 class="project-title">llamdrop</h3>
+          <p class="project-desc">
+            Run AI on any device. Profiles your hardware, picks the right model, runs it. 41 verified models. Works on phones, old laptops, Raspberry Pi.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">CLI/TUI</span>
+            <span class="project-tag">GPL v3</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/DeVenLucaz/llamdrop" target="_blank" rel="noopener noreferrer" class="project-link">
+              GitHub <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- ── Card 3: MinePath ── -->
+        <article class="project-card accent-orange reveal reveal-delay-1">
+          <div class="project-header">
+            <span class="project-icon">💣</span>
+            <span class="project-status">V4 — Playable</span>
+          </div>
+          <h3 class="project-title">MinePath</h3>
+          <p class="project-desc">
+            One chicken. One minefield. Minesweeper survival with a skill tree, egg hatchery, and passive income farm.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">React</span>
+            <span class="project-tag">Vite</span>
+            <span class="project-tag">Capacitor</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/DeVenLucaz/minepath" target="_blank" rel="noopener noreferrer" class="project-link">
+              GitHub <span class="arrow">→</span>
+            </a>
+            <a href="https://DeVenLucaz.github.io/minepath/" target="_blank" rel="noopener noreferrer" class="project-link">
+              Play Now <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- ── Card 4: FactRadar ── -->
+        <article class="project-card accent-cyan reveal reveal-delay-2">
+          <div class="project-header">
+            <span class="project-icon">📡</span>
+            <span class="project-status">Live (unstable)</span>
+          </div>
+          <h3 class="project-title">FactRadar</h3>
+          <p class="project-desc">
+            AI-powered fact-checking. Cross-verifies claims using Gemini + Groq independently. Runs on free APIs — the instability is intentional.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Node.js</span>
+            <span class="project-tag">Express</span>
+            <span class="project-tag">SQLite</span>
+          </div>
+          <div class="project-links">
+            <a href="https://factradar.onrender.com" target="_blank" rel="noopener noreferrer" class="project-link">
+              Visit <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- ── Card 5: Lok.AI ── -->
+        <article class="project-card accent-blue reveal reveal-delay-3">
+          <div class="project-header">
+            <span class="project-icon">🤖</span>
+            <span class="project-status">Pre-release</span>
+          </div>
+          <h3 class="project-title">Lok.AI</h3>
+          <p class="project-desc">
+            llamdrop's Android sibling. Full Jetpack Compose UI. llama.cpp via JNI bridge. TF-IDF retrieval, Named Agents.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Kotlin</span>
+            <span class="project-tag">Compose</span>
+            <span class="project-tag">NDK</span>
+            <span class="project-tag">JNI</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/DeVenLucaz/Lok.AI" target="_blank" rel="noopener noreferrer" class="project-link">
+              GitHub <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- ── Card 6: Vernux ── -->
+        <article class="project-card accent-emerald reveal reveal-delay-4">
+          <div class="project-header">
+            <span class="project-icon">🟢</span>
+            <span class="project-status">v0.8.0</span>
+          </div>
+          <h3 class="project-title">Vernux</h3>
+          <p class="project-desc">
+            Natural language Termux. 710+ commands. Safety classification. Reality Bridge for Android-specific fixes.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">NLP</span>
+            <span class="project-tag">Offline</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/DeVenLucaz/Vernux" target="_blank" rel="noopener noreferrer" class="project-link">
+              GitHub <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- ── Card 7: DAAYAN (Full-Width Special) ── -->
+        <article class="project-card daayan-card accent-crimson reveal">
+          <div class="project-header">
+            <span class="project-icon">📖</span>
+            <span class="project-status">Complete</span>
+          </div>
+          <h3 class="project-title">DAAYAN <span class="hindi-title">बंधन</span></h3>
+          <p class="project-desc">
+            A bilingual surrealist novel. Two versions — Realistic and Myth. Also a 377-entry training dataset.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Fiction</span>
+            <span class="project-tag">Hindi-English</span>
+            <span class="project-tag">LLM Dataset</span>
+          </div>
+          <div class="project-links">
+            <a href="daayan.html" class="project-link">
+              Enter DAAYAN <span class="arrow">→</span>
+            </a>
+          </div>
+        </article>
+
+      </div><!-- /.projects-grid -->
+    </div>
+  </section>
+
+  <!-- ========== About Section ========== -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">THE BUILDER</span>
+        <h2 class="section-title">Who is DeVen?</h2>
+      </div>
+
+      <div class="about-grid">
+        <!-- Left column — text -->
+        <div class="about-text reveal-left">
+          <p>
+            A vibe-coder. Not a developer in any traditional sense — no CS degree, no PC, no IDE, no desk setup. I build everything on an Android phone using Termux. I've been writing fiction for 9+ years. I've been building software for about 6 months.
+          </p>
+          <p>
+            The vibe comes first, the architecture follows — but the architecture is actually good. I orchestrate AI models to execute my vision. Claude handles architecture and planning. Antigravity CLI handles implementation. I handle everything else.
+          </p>
+          <p>
+            I build things that may not be available to most — built exactly to my own convenience and specifications.
+          </p>
+        </div>
+
+        <!-- Right column — tech + workflow -->
+        <div class="about-sidebar reveal-right">
+          <div class="tech-stack">
+            <span class="tech-pill">Kotlin</span>
+            <span class="tech-pill">React</span>
+            <span class="tech-pill">Vite</span>
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">Node.js</span>
+            <span class="tech-pill">Termux</span>
+            <span class="tech-pill">GitHub Actions</span>
+          </div>
+
+          <div class="workflow-card">
+            <div><span class="wf-comment">// workflow.config</span></div>
+            <div><span class="wf-key">device</span>: <span class="wf-string">"Android Phone"</span></div>
+            <div><span class="wf-key">terminal</span>: <span class="wf-string">"Termux"</span></div>
+            <div><span class="wf-key">architect</span>: <span class="wf-value">Claude</span></div>
+            <div><span class="wf-key">builder</span>: <span class="wf-value">Antigravity CLI</span></div>
+            <div><span class="wf-key">direction</span>: <span class="wf-string">"Me"</span></div>
+            <div><span class="wf-key">monitors</span>: <span class="wf-value">0</span></div>
+            <div><span class="wf-key">excuses</span>: <span class="wf-value">null</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DAAYAN Teaser ========== -->
+  <section id="daayan-teaser">
+    <div class="container">
+      <!-- Decorative divider -->
+      <div class="daayan-divider reveal">
+        <span class="daayan-divider-line"></span>
+        <span class="daayan-divider-dot"></span>
+        <span class="daayan-divider-line"></span>
+      </div>
+
+      <!-- Hindi title -->
+      <div class="daayan-hindi reveal reveal-delay-1">बंधन</div>
+
+      <!-- Tagline -->
+      <p class="daayan-tagline reveal reveal-delay-2">
+        Some bonds don't break. They just change what they're holding.
+      </p>
+
+      <!-- Brief -->
+      <p class="daayan-brief reveal reveal-delay-3">
+        A bilingual surrealist novel in two versions — one grounded in the streets of Pune at 4 AM, one drifting through dreamworld mythology. Both true. Both different.
+      </p>
+
+      <!-- CTA -->
+      <a href="daayan.html" class="daayan-cta reveal reveal-delay-4">
+        Enter DAAYAN बंधन →
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer id="footer">
+    <div class="footer-content">
+      <div class="footer-left">© 2025 DeVenLucaz</div>
+      <div class="footer-center">Built entirely on an Android phone. No PC.</div>
+      <div class="footer-right">
+        <a href="https://github.com/DeVenLucaz" target="_blank" rel="noopener noreferrer">
+          <!-- GitHub SVG Icon -->
+          <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== Scripts ========== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="main.js"></script>
+  <script src="astro.js"></script>
+
+</body>
+</html>
