@@ -1,2 +1,0 @@
-# DevLuz
-Personal 
