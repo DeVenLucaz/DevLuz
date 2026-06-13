@@ -62,14 +62,14 @@
   let keyedReady = false;
 
   img.crossOrigin = 'Anonymous';
-  img.src = 'astro-inkdrop-reference.png?v=' + Date.now();
+  img.src = 'astro-front.png?v=' + Date.now();
   img.onload = () => {
-    const frameWidth = img.naturalWidth / 4;
+    const frameWidth = img.naturalWidth;
     const frameHeight = img.naturalHeight;
     imgCanvas.width = frameWidth;
     imgCanvas.height = frameHeight;
-    // Draw only the leftmost character (sourceX=0, sourceY=0)
-    imgCtx.drawImage(img, 0, 0, frameWidth, frameHeight, 0, 0, frameWidth, frameHeight);
+    // Draw full image
+    imgCtx.drawImage(img, 0, 0, frameWidth, frameHeight);
     
     // Strip white background via color keying
     const imgData = imgCtx.getImageData(0, 0, frameWidth, frameHeight);
@@ -77,7 +77,7 @@
     for (let i = 0; i < data.length; i += 4) {
       let r = data[i], g = data[i+1], b = data[i+2];
       // If close to white, make transparent
-      if (r > 230 && g > 230 && b > 230) {
+      if (r > 220 && g > 220 && b > 220) {
         data[i+3] = 0;
       }
     }
