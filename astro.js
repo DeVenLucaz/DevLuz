@@ -62,10 +62,10 @@
   let keyedReady = false;
 
   img.crossOrigin = 'Anonymous';
-  img.src = 'astro-inkdrop-reference.png';
+  img.src = 'astro-inkdrop-reference.png?v=' + Date.now();
   img.onload = () => {
-    const frameWidth = img.width / 4;
-    const frameHeight = img.height;
+    const frameWidth = img.naturalWidth / 4;
+    const frameHeight = img.naturalHeight;
     imgCanvas.width = frameWidth;
     imgCanvas.height = frameHeight;
     // Draw only the leftmost character (sourceX=0, sourceY=0)
