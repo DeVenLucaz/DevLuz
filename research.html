@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research & Field Notes — DeVenLucaz</title>
+  <meta name="description" content="Research & Field Notes by DeVenLucaz. A record of things actually learned, built, and understood." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%2300e5ff'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .research-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .research-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+    }
+    .research-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+    .research-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      opacity: 0.5;
+    }
+    .research-card.accent-cyan::before { background: var(--accent); }
+    .research-card.accent-orange::before { background: #ff9800; }
+    .research-card.accent-violet::before { background: #b39ddb; }
+    
+    .research-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 1rem;
+    }
+    .accent-cyan .research-tag { color: var(--accent); background: rgba(0, 229, 255, 0.1); }
+    .accent-orange .research-tag { color: #ff9800; background: rgba(255, 152, 0, 0.1); }
+    .accent-violet .research-tag { color: #b39ddb; background: rgba(179, 157, 219, 0.1); }
+    
+    .research-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    
+    .research-question {
+      font-style: italic;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .research-body p {
+      margin-bottom: 1rem;
+    }
+    
+    .stat-panel {
+      display: none;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .expandable-card.expanded .stat-panel {
+      display: block;
+      animation: fadeIn 0.4s ease-out;
+    }
+    
+    .stat-header {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+    }
+    
+    .expand-btn {
+      color: var(--text-muted);
+      transition: color 0.3s, transform 0.3s;
+    }
+    .stat-header:hover .expand-btn {
+      color: var(--text);
+    }
+    .expandable-card.expanded .expand-btn {
+      transform: rotate(180deg);
+    }
+
+    .read-time {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise-overlay"></div>
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+  
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-glow"></div>
+      <span class="loader-text">DEVENLUCAZ</span>
+    </div>
+  </div>
+
+  <div id="cursor-glow"></div>
+
+  <nav id="main-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-accent">DeVen</span>Lucaz
+    </a>
+    <div class="nav-links">
+      <a href="index.html#projects">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="research.html">RESEARCH</a>
+      <a href="daayan.html">DAAYAN</a>
+      <a href="https://github.com/DeVenLucaz" target="_blank" rel="noopener noreferrer" class="nav-external">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <section style="padding-top: 120px; padding-bottom: 80px;">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">FIELD NOTES</span>
+        <h2 class="section-title">Research</h2>
+        <p style="margin-top: 1rem; max-width: 600px;">
+          Not a blog. Not tutorials. Not documentation. A record of things actually learned, built, and understood — with the real details showing, not just the headline.
+        </p>
+      </div>
+
+      <div class="research-grid">
+        <!-- Entry 1 -->
+        <article class="research-card expandable-card accent-cyan reveal">
+          <span class="research-tag">PROJECT DEEP-DIVE</span>
+          <h3 class="research-title">The Spiking Neural Network Inside DosCom</h3>
+          <p class="research-question">How does a floating Android creature make behavioral decisions without calling an AI API?</p>
+          
+          <div class="research-body">
+            <p><strong>Background:</strong> DosCom needed a brain. Not a rulebook — something that could weight multiple signals simultaneously, produce different outputs with similar inputs, and change over time. The answer was a Spiking Neural Network: a Leaky Integrate-and-Fire model ported entirely to Kotlin, running on-device with no ML framework, no TensorFlow Lite, no ONNX. Just math.</p>
+            
+            <div class="stat-panel">
+              <p><strong>How it actually works:</strong></p>
+              <p>The core is <code>LIFCore</code> — 8 input neurons feeding into 48 hidden neurons. The hidden layer has recurrent connections back into itself (each of the 48 neurons can influence all others), giving the network memory within a single think cycle.</p>
+              <p>Each neuron maintains a membrane potential — a float that starts at -65 (resting) and climbs toward -50 (threshold) as current flows in:</p>
+              <pre><code>dv = (vRest - membrane[j] + current) / tau
+membrane[j] += dv
+if membrane[j] >= vThresh → spike, reset to vRest</code></pre>
+              <p>When <code>think()</code> is called, the network runs for 150 time steps. Each step, spikes propagate through input weights and recurrent weights, accumulating a spike count per neuron. After 150 steps, those counts multiply through a 48×19 decision layer to produce 19 output scores.</p>
+              <p>Those 19 scores map to 7 behavioral decisions:</p>
+              <ul>
+                <li>Outputs 0–5 → mime movement style (walk, slide, staircase, skateboard, balloon, rocket)</li>
+                <li>Outputs 6–10 → idle animation</li>
+                <li>Outputs 11–14 → toy box selection</li>
+                <li>Outputs 15–18 → binary flags (moonwalk, discovery mode, social mode, hyperactive mode)</li>
+              </ul>
+              <p><strong>The 8 inputs it reads:</strong><br>Battery level, time of day (normalized 0–1 across 24 hours), user activity level, session length, emotional sentiment score from EmotionalMemory, screen position, app category, idle duration.</p>
+              <p><strong>How it learns (STDP-lite):</strong><br>When the user reacts positively, <code>learn()</code> is called with a positive reward float. Learning rate scales with reward: <code>lr = 0.01f * reward</code>. For every hidden neuron that fired during the last think cycle — if an input was active when that neuron fired, the weight strengthens. Selected output weights strengthen; unselected ones weaken slightly (0.1× the learning rate). Weights save to <code>brain.json</code> in the app's private storage after each learning event. On next launch the brain loads its previous state.</p>
+              <p><strong>What makes each install unique:</strong><br>Weights initialize with <code>gaussian() * 8f</code> for input weights and <code>gaussian() * 0.5f</code> for recurrent weights. This seed is generated fresh on first install and not stored. Two DosComs installed on the same day make different decisions from hour one and diverge further with every interaction. There's no default behavior — only what this specific brain learned on this specific phone.</p>
+              <p><strong>What was surprising:</strong><br>The recurrent connections were added almost as an afterthought. The expectation was noise. Instead they add something closer to momentum — the network's previous state influences its next decision in a way that makes behavior feel like it has inertia. It doesn't just react to now. It carries something forward.</p>
+            </div>
+          </div>
+          
+          <div class="stat-header">
+            <span class="read-time">~3 min read</span>
+            <button class="expand-btn">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- Entry 2 -->
+        <article class="research-card expandable-card accent-cyan reveal reveal-delay-1">
+          <span class="research-tag">PROJECT DEEP-DIVE</span>
+          <h3 class="research-title">How llamdrop Knows What Your Device Can Actually Run</h3>
+          <p class="research-question">Why do most local AI tools crash or give wrong model recommendations, and how does llamdrop avoid it?</p>
+          
+          <div class="research-body">
+            <p><strong>The real problem:</strong> RAM alone is wrong. A phone with 8GB RAM but a Mali GPU should never use GPU inference. A device with LPDDR4x runs inference faster than LPDDR4 at the same capacity. The Termux environment breaks standard Linux assumptions — clang not gcc, no AVX2 on ARM, unreliable mmap on some Android kernels. llamdrop had to solve all of it.</p>
+            
+            <div class="stat-panel">
+              <p><strong>The 7-tier classification system:</strong><br>llamdrop reads <code>/proc/meminfo</code> directly, applying a weighted contribution from swap/zram (capped at 1.5GB, weighted 0.6× since compressed memory is slower). It classifies devices into: Micro (&lt;2GB), Low (2–4GB), Low-Mid (4–6GB), Mid (6–12GB), High (12–24GB), Desktop (24–64GB), Workstation (64GB+). The model catalog is then filtered — if you're on Micro you never see a 7B model.</p>
+              <p><strong>The GPU decision:</strong><br>This is the most important call llamdrop makes, and it goes against what most guides say.</p>
+              <p>On Android, the code reads <code>getprop ro.hardware.egl</code>. If it returns <code>mali</code> → GPU disabled. Reason: "Mali Vulkan is SLOWER than CPU for LLM." If it returns <code>adreno</code> → GPU disabled. Reason: "Adreno Vulkan crashes in llama.cpp." CPU-only on all Android devices, no toggle offered, because the answer is always no.</p>
+              <p>On desktop Linux with NVIDIA (<code>nvidia-smi</code> present) → CUDA enabled. On Apple Silicon → Metal via MLX. The backend decision is architecture-aware, not just "do you have a GPU."</p>
+              <p><strong>big.LITTLE thread selection:</strong><br>Standard tools use all available cores. llamdrop maintains a hardcoded lookup table of 30+ chips mapping each to its big-core count. The Dimensity 800U has 2 big cores — llamdrop uses 2 threads, not 8. The Snapdragon 888 has 4 big cores — 4 threads. Unknown ARM chips get <code>max(1, cores // 2)</code> as a conservative fallback.</p>
+              <p>The measured result: performance-core-only threading gives 20–40% speed improvement with no quality loss on big.LITTLE devices.</p>
+              <p><strong>Other Termux-specific fixes:</strong></p>
+              <ul>
+                <li>Swap contribution discounted 0.6× (compressed memory is slower during inference)</li>
+                <li>mmap disabled by default on Termux (unreliable on some Android kernels)</li>
+                <li>Context window sized from effective RAM (physical + weighted zram), not total RAM</li>
+                <li>Flash attention only enabled for CUDA/Metal, not Vulkan</li>
+              </ul>
+              <p><strong>What was surprising:</strong><br>The biggest performance gains weren't from model selection or quantization. They were from thread count. The difference between "use all cores" and "use only big cores" was larger than the difference between Q4 and Q5 quantization on the same model.</p>
+            </div>
+          </div>
+          
+          <div class="stat-header">
+            <span class="read-time">~2 min read</span>
+            <button class="expand-btn">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- Entry 3 -->
+        <article class="research-card expandable-card accent-cyan reveal reveal-delay-2">
+          <span class="research-tag">PROJECT DEEP-DIVE</span>
+          <h3 class="research-title">FactRadar's Cross-Verification Pipeline</h3>
+          <p class="research-question">How do you build a fact-checker that doesn't just ask one AI "is this true?" — because that's asking for an opinion, not a verdict.</p>
+          
+          <div class="research-body">
+            <p><strong>The architecture principle:</strong> Evidence first. AI last. Never send a claim to an AI cold.</p>
+            
+            <div class="stat-panel">
+              <p><strong>The pipeline, step by step:</strong></p>
+              <p><strong>1. Cache check (first)</strong><br>Before anything else, the last 100 fact-checks from the past 7 days are loaded from SQLite. String similarity (Levenshtein-based) is calculated against the incoming claim. If any existing result scores ≥75% match, it returns immediately with the cached verdict. Same claim, same answer, no re-burning API quota.</p>
+              <p><strong>2. Evidence gathering (parallel)</strong><br>Three sources are queried simultaneously via <code>Promise.all</code>:</p>
+              <ul>
+                <li>NewsAPI — recent articles matching the claim's keywords (up to 6 words, URLs stripped)</li>
+                <li>Google News RSS — free, no API key, catches what NewsAPI misses</li>
+                <li>Wikipedia API — background context via key topic extraction (3-word phrases first, then 2-word, then single words)</li>
+              </ul>
+              <p>If the assembled evidence context is under 50 characters — nothing found — the claim auto-returns UNVERIFIED without calling any AI.</p>
+              <p><strong>3. Red flag detection (independent of AI)</strong><br>URL checked for suspicious TLDs (.xyz, .info, .click, .buzz). Article text checked for: no author byline in first 500 characters, more than 5 ALL-CAPS words, 3+ sensational keywords (shocking, bombshell, explosive, exposed, secret, hidden truth). These flags are scored before any AI sees anything.</p>
+              <p><strong>4. Cross-verification (the core)</strong><br><code>Promise.allSettled</code> calls Gemini 2.5 Flash and Groq Mixtral-8x7b simultaneously, both receiving the same claim + assembled evidence. Temperature set to 0 on both for maximum consistency. If both succeed and verdicts match → result stands. If they disagree → verdict becomes DISPUTED, both models' reasoning shown side by side, credibility score averaged. One model's opinion can be wrong. Two independent models disagreeing is itself useful information.</p>
+              <p><strong>5. Confidence sub-scoring</strong><br>Three independent scores (0–10 each): source reliability (news source count + Wikipedia presence), claim specificity (article content found?), corroboration (how many sources agree). Combined into LOW / MEDIUM / HIGH. Displayed alongside the verdict.</p>
+              <p><strong>Why it's intentionally unstable:</strong><br>FactRadar runs on free tiers of Gemini, Groq, and OpenRouter in a sequential fallback chain. When one rate-limits, it tries the next. Sometimes all three are exhausted. This is a deliberate constraint — the tool was built to cost nothing to operate. The instability is the price. A paid version would be stable. This version is free and honest about its limitations.</p>
+              <p><strong>Input types supported:</strong><br>Plain text claims, URLs (article scraped with Cheerio — nav/footer/ads stripped, first 4000 characters used), image uploads (screenshots analyzed by Gemini's vision API only — Groq has no vision).</p>
+            </div>
+          </div>
+          
+          <div class="stat-header">
+            <span class="read-time">~3 min read</span>
+            <button class="expand-btn">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- Entry 4 -->
+        <article class="research-card expandable-card accent-cyan reveal reveal-delay-1">
+          <span class="research-tag">PROJECT DEEP-DIVE</span>
+          <h3 class="research-title">MinePath's Difficulty Scaling and Grid Generation</h3>
+          <p class="research-question">How do you make a minesweeper game that stays dangerous at every level without becoming random?</p>
+          
+          <div class="research-body">
+            <p><strong>The core formula:</strong> MinePath's difficulty isn't a single slider. Five independent variables all scale with level:</p>
+            <pre><code>Level 1–5:   mineRate=0.20, timerSpeed=0.8,  obstacleFreq=0
+Level 6–10:  mineRate=0.30, timerSpeed=1.2,  obstacleFreq=0.3
+Level 11–15: mineRate=0.40, timerSpeed=1.8,  obstacleFreq=0.5
+Level 16–20: mineRate=0.50, timerSpeed=2.5,  obstacleFreq=0.7
+Level 21+:   mineRate=0.60, timerSpeed=3.5,  obstacleFreq=1.0</code></pre>
+            
+            <div class="stat-panel">
+              <p>Grid size also grows: <code>rows = min(6 + floor(level/4), 10)</code>, <code>cols = min(6 + floor(level/6), 9)</code>. Timer max shrinks: <code>max(20, 45 - level * 0.8)</code>. By level 20 you have a 10×9 grid, 60% mine density, a timer that starts at 29 seconds and speeds up 2.5× as it counts down, with obstacles on 70% of non-mine tiles.</p>
+              <p><strong>Grid generation — guaranteed safe path:</strong><br>MinePath doesn't scatter mines randomly and hope a path exists. It generates a safe path first, then mines everything else.</p>
+              <p>A biased random walk starts at bottom-left, ends at top-right. At each step, moves toward the checkpoint are added to the candidate list 3× — so the path trends toward the goal but can meander. Tiles visited by the walk are marked safe. Then mines are placed only on tiles the path never visited.</p>
+              <p>At level 8+ a "fake safe" mechanic activates: <code>fakeSafeCount = floor(level/8)</code> tiles that appear unrevealed (not visually marked as mines) are secretly mines. These are placed on safe tiles, then flipped to <code>isMine=true</code>. The player has no indicator. This is what makes high levels brutal — you can't trust your own careful play.</p>
+              <p><strong>Daily Challenge seeding:</strong><br>Daily challenges use a deterministic seeded random from the date string. <code>dateString.split('').reduce((a, b) => { a = ((a &lt;&lt; 5) - a) + b.charCharCode(0); return a &amp; a; }, 0)</code> generates a seed. All calls to <code>sRandom()</code> in daily mode use <code>Math.sin(seed++) * 10000 - floor(...)</code> instead of <code>Math.random()</code>. Same date anywhere in the world generates identical grid layout, identical mutator selection, identical difficulty offset (-5 to +20 levels from base).</p>
+              <p><strong>The 21-skill tree:</strong><br>Skills fall into 4 paths — Scout, Tank, Merchant, and Skin (4 skins × 3 skills each). Skin skills are locked behind owning the skin. Ghost Chicken's "Possession" (survive any death once per run with 1 second of invincibility) costs 22 Feather Points — the most expensive single skill. Scout's "Hazard Sense" (10% chance to reveal nearby mines when stepping on safe tiles) is the most strategically interesting — passive mine detection with no resource cost.</p>
+              <p>Endless Mode runs on a separate tile-runner engine: 6-wide auto-scrolling grid, scroll speed starts at 0.5 rows/second, difficulty percentage drives mine count per row, every 6 rows a floor boundary triggers. 5 themes (Classic, Lava, Ice, Jungle, Galaxy) each with unique hazard mechanics.</p>
+              <p><strong>What was surprising:</strong><br>The fake safe mechanic was added at level 8 as a test. It immediately made the game feel unfair — and then players started playing more carefully. The psychological effect of "any tile could be fake safe" changes the whole approach to the grid in a way that additional mines don't. Genuine uncertainty about what the safe tiles are doing is more interesting than just more mines.</p>
+            </div>
+          </div>
+          
+          <div class="stat-header">
+            <span class="read-time">~3 min read</span>
+            <button class="expand-btn">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- Entry 5 -->
+        <article class="research-card expandable-card accent-orange reveal reveal-delay-2">
+          <span class="research-tag">OSINT</span>
+          <h3 class="research-title">Image Geolocation: Reading What a Photo Doesn't Say</h3>
+          <p class="research-question">What this is: OSINT image geolocation is the practice of determining where a photograph was taken using only visual information — no metadata, no GPS EXIF data, no assistance from the person who took it.</p>
+          
+          <div class="research-body">
+            <p><strong>Current skill level:</strong> Landmarks, shadows, architectural patterns, basic tool chain. Not advanced. Somewhere in the middle of actually understanding what I'm looking at.</p>
+            
+            <div class="stat-panel">
+              <p><strong>The core techniques:</strong></p>
+              <p><strong>Sun angle and shadow direction:</strong><br>The sun's position tells you two things: time of day and approximate latitude. Shadows pointing roughly north → southern hemisphere. Shadows pointing roughly south → northern hemisphere. Shadow length relative to object height narrows the latitude band and season. This doesn't give a city. It eliminates most of the world immediately.</p>
+              <p><strong>Landmark and signage recognition:</strong><br>The obvious starting point, but the skill isn't recognizing the Eiffel Tower. It's recognizing the style of a streetlight, the typeface on a road sign, the shape of a power line connector, the design of a pedestrian crossing signal. These micro-details are more useful than the main subject because they're less likely to have been staged or moved.</p>
+              <p><strong>Architectural and infrastructure patterns:</strong><br>Flat rooflines with external water tanks suggest Mediterranean or Middle Eastern climate zones. Wooden overhead power lines suggest rural areas of specific countries. The color of visible soil suggests geological regions. Urban planning signatures — the angle of intersections, the width of sidewalks, the style of fencing — are surprisingly regional.</p>
+              <p><strong>Tool chain:</strong><br>Google Maps satellite and Street View for verification once a candidate location is found. Overpass Turbo (OpenStreetMap queries) for finding specific infrastructure — a particular bridge type, a specific intersection pattern — when a region is known but not a street. Reverse image search with Yandex Images (significantly better than Google for architectural matching, especially Eastern Europe and Central Asia). suncalc.org for shadow theory verification against specific dates and coordinates.</p>
+              <p><strong>What's genuinely hard:</strong><br>Interiors with no windows. Overcast days with no shadows. Deliberately cropped images removing all context. Photos from regions where the visual vocabulary is unfamiliar. Getting better at this means building familiarity with what "normal" looks like in regions never visited — which is its own kind of study that doesn't end.</p>
+            </div>
+          </div>
+          
+          <div class="stat-header">
+            <span class="read-time">~2 min read</span>
+            <button class="expand-btn">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- Entry 6 -->
+        <article class="research-card expandable-card accent-violet reveal reveal-delay-3">
+          <span class="research-tag">CONSCIOUSNESS</span>
+          <h3 class="research-title">Lucid Dreaming: Six Months of Actually Practicing It</h3>
+          <p class="research-question">What this is: A record of genuine practice, not a summary of what books say. Six months of consistent work with dream journaling and technique practice. Writing about it in connection with DAAYAN.</p>
+          
+          <div class="research-body">
+            <p><strong>Connection to DAAYAN:</strong> The myth version of DAAYAN operates in a space where the boundary between conscious intention and dream-state narrative is deliberately blurred. Practicing lucid dreaming changed how that version of the book was written. Some of the myth version's internal logic came directly from noticing how dream logic actually operates when you're aware inside it. The surrealism isn't invented — it's observed.</p>
+            
+            <div class="stat-panel">
+              <p><strong>The techniques practiced:</strong></p>
+              <p><strong>WILD (Wake-Initiated Lucid Dreaming):</strong><br>Entering a dream directly from waking consciousness without losing awareness. The transition involves hypnagogic imagery — visual and auditory hallucinations as the brain shifts into sleep mode. The practice is maintaining a thread of awareness through that transition without either getting pulled into unconscious sleep or staying too alert to sleep at all. Hardest technique. Success rate remains low. When it works, the dreams have a different quality — more stable, more controllable, more vivid than DILD.</p>
+              <p><strong>MILD (Mnemonic Induction of Lucid Dreams):</strong><br>Setting an intention before sleep: "I will recognize I'm dreaming." Combined with reality testing throughout the day — asking "am I dreaming right now?" genuinely, not as a formality. The theory is that this habit carries into dreams. It does, sometimes. Recognition usually comes from a contradiction — something that couldn't be real. The challenge is that in dreams, contradictions feel normal until you specifically look for them.</p>
+              <p><strong>Dream journaling:</strong><br>The most important practice. Writing down dreams immediately on waking before memory degrades. After six months, patterns emerge: recurring locations, recurring figures, recurring emotional tones. These patterns become the reality checks — if the recurring location appears, recognition becomes more likely.</p>
+              <p><strong>What's actually been noticed:</strong></p>
+              <p>The transition state between waking and sleep (hypnagogia) is more accessible than expected. With practice it's possible to hold awareness there longer without falling fully asleep or snapping back. What lives in that state is strange — fragmented, non-narrative, often more interesting than what appears in full dreams.</p>
+              <p>Dream logic has its own internal consistency. Within a dream, things make sense by rules that don't exist while awake. Understanding those rules — the internal logic of a specific dream's world — is what allows navigation once lucid. Fighting the logic doesn't work. Working with it does.</p>
+              <p>The intersection with writing: fiction that operates in dream-logic space (like the myth version of DAAYAN) is more convincing when the writer has experienced dream logic from inside it. The reader feels the difference even if they can't name it.</p>
+              <p><strong>What's still being figured out:</strong><br>Control. Recognizing the dream state is achievable with some consistency. Directing what happens once lucid is still mostly unsuccessful — the environment tends to destabilize when deliberate intention is applied too forcefully. Still working on it.</p>
+            </div>
+          </div>
+          
+          <div class="stat-header">
+            <span class="read-time">~3 min read</span>
+            <button class="expand-btn">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer id="footer">
+    <div class="footer-content">
+      <div class="footer-left">© 2025 DeVenLucaz</div>
+      <div class="footer-center">Built entirely on an Android phone. No PC.</div>
+      <div class="footer-right">
+        <a href="https://github.com/DeVenLucaz" target="_blank" rel="noopener noreferrer">
+          <!-- GitHub SVG Icon -->
+          <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
