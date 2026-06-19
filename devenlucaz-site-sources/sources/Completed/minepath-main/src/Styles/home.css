@@ -1,0 +1,261 @@
+.home-screen, .sanctuary-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-gradient);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+
+/* Stars */
+.stars-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s ease-in-out infinite alternate;
+  opacity: 0.4;
+}
+
+/* Bottom green glow — hints at a ground/meadow */
+.home-ground-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 38%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Content column */
+.sanctuary-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 20px;
+  width: 100%;
+  max-width: 400px;
+  background: rgba(3, 7, 18, 0.4);
+  border-radius: 32px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* ── LOGO ── */
+.home-logo {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.home-logo-letter {
+  font-family: var(--font-header);
+  font-size: clamp(36px, 11vw, 52px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+  background: linear-gradient(to bottom, #FFFFFF 40%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 10px rgba(251, 191, 36, 0.2));
+  display: inline-block;
+  animation: logoBobble 3s ease-in-out infinite;
+}
+
+.home-logo-letter:nth-child(2) { animation-delay: 0.08s; }
+.home-logo-letter:nth-child(3) { animation-delay: 0.16s; }
+.home-logo-letter:nth-child(4) { animation-delay: 0.24s; }
+.home-logo-letter:nth-child(5) { animation-delay: 0.32s; }
+.home-logo-letter:nth-child(6) { animation-delay: 0.40s; }
+.home-logo-letter:nth-child(7) { animation-delay: 0.48s; }
+.home-logo-letter:nth-child(8) { animation-delay: 0.56s; }
+
+/* ── CHICKEN ── */
+.home-chicken-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
+  cursor: pointer;
+}
+.home-chicken-wrap:active {
+  transform: scale(0.96);
+}
+
+.home-chicken-wrap.bounce-up   { transform: translateY(-8px) rotate(0.5deg); }
+.home-chicken-wrap.bounce-down { transform: translateY(2px)   rotate(-0.5deg); }
+
+/* ── GOLDEN MASCOT EASTER EGG ── */
+.golden-mascot .home-chicken-svg {
+  filter: brightness(1.2) contrast(1.1) drop-shadow(0 0 16px rgba(250, 204, 21, 0.7)) !important;
+  animation: goldenPulse 2s infinite alternate ease-in-out;
+}
+
+.golden-mascot::after {
+  content: '✦';
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: 24px;
+  color: var(--gold);
+  animation: mascotSparkle 1.5s infinite;
+  pointer-events: none;
+}
+
+.home-chicken-shadow {
+  position: absolute;
+  bottom: -4px;
+  left: 50%; transform: translateX(-50%);
+  width: 90px; height: 10px;
+  background: rgba(0,0,0,0.35);
+  border-radius: 50%;
+  filter: blur(6px);
+}
+
+/* ── STAT CHIPS ── */
+.home-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.home-chip-val {
+  font-family: var(--font-header);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+/* ── NAVIGATION GRID ── */
+.sanctuary-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.sanctuary-btn-main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+  border-radius: var(--btn-radius);
+  border: 1px solid rgba(255,255,255,0.1);
+  background: linear-gradient(135deg, #10B981, #047857);
+  color: #022c22;
+  font-family: var(--font-header);
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  box-shadow: var(--btn-shadow-green);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.sanctuary-btn-main:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+.sanctuary-btn-main:disabled {
+  opacity: 0.4;
+  filter: grayscale(0.8);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.sanctuary-btn-sq {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 6px;
+  border-radius: var(--btn-radius);
+  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--text-primary);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.sanctuary-btn-sq:active {
+  transform: scale(0.95);
+  background: var(--card-bg-hover);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.sanctuary-btn-sq-label {
+  font-family: var(--font-header);
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-secondary);
+}
+
+/* ── HINT ── */
+.home-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.egg-indicator-dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 14px;
+  height: 14px;
+  background: var(--accent-red);
+  border: 2px solid #030712;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(244, 63, 94, 0.6);
+  z-index: 5;
+}
+
+/* Animations */
+@keyframes logoBobble {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes goldenPulse {
+  0% { filter: brightness(1.1) contrast(1.1) drop-shadow(0 0 8px rgba(250, 204, 21, 0.4)); }
+  100% { filter: brightness(1.3) contrast(1.1) drop-shadow(0 0 20px rgba(250, 204, 21, 0.8)); }
+}
+
+@keyframes mascotSparkle {
+  0%, 100% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+}

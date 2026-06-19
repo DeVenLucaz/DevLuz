@@ -1,0 +1,347 @@
+.leaderboard-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-gradient);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.lb-big-title {
+  text-align: center;
+  font-size: clamp(18px, 6vw, 24px);
+  font-weight: 900;
+  color: #FFFFFF;
+  background: linear-gradient(to bottom, #FFFFFF 30%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+  padding: 12px 16px 4px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── TAB TOGGLE ── */
+.lb-tabs {
+  display: flex;
+  margin: 8px 16px 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 4px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(8px);
+}
+
+.lb-tab {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--text-secondary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lb-tab--active {
+  background: var(--card-bg-hover);
+  color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ── GLOBAL: PODIUM ── */
+.lb-global {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  z-index: 2;
+}
+
+.lb-podium {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 16px 0;
+}
+
+.lb-podium-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  max-width: 100px;
+}
+
+.lb-podium-crown {
+  font-size: 24px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+  margin-bottom: -4px;
+  z-index: 3;
+}
+
+.lb-podium-chicken {
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
+  z-index: 2;
+}
+
+.lb-podium-name {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+.lb-podium-score {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.lb-pedestal {
+  width: 100%;
+  border-radius: 12px 12px 4px 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+
+.lb-pedestal::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+}
+
+.lb-pedestal-num {
+  font-size: 24px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.1);
+  line-height: 1;
+}
+
+/* ── RANKINGS LIST ── */
+.lb-rankings-wrap {
+  margin: 16px 16px 0;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border-radius: 20px 20px 0 0;
+  padding: 16px 16px 8px;
+  border: 1px solid var(--card-border);
+  border-bottom: none;
+}
+
+.lb-rankings-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.lb-rankings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 14px;
+  padding: 10px 14px;
+}
+
+.lb-row-rank {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  min-width: 24px;
+}
+
+.lb-row-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.lb-row-name {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lb-row-score {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+/* Player's own pinned row */
+.lb-my-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.15), rgba(250, 204, 21, 0.05));
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 20px rgba(250, 204, 21, 0.1);
+}
+
+.lb-my-rank  { color: var(--gold) !important; }
+.lb-my-name  { color: var(--gold) !important; font-weight: 800 !important; }
+.lb-my-score { color: var(--gold) !important; font-weight: 900 !important; }
+
+.lb-my-avatar {
+  border: 1px solid rgba(250, 204, 21, 0.4) !important;
+  background: rgba(250, 204, 21, 0.05) !important;
+}
+
+/* ── MY RUNS TAB ── */
+.lb-myruns {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.lb-pb-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 16px 20px;
+  flex-shrink: 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.lb-pb-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.lb-pb-val {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--gold);
+  text-shadow: 0 0 15px rgba(250, 204, 21, 0.3);
+}
+
+.lb-runs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lb-runs-header {
+  display: grid;
+  grid-template-columns: 48px 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 4px 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.lb-run-row {
+  display: grid;
+  grid-template-columns: 48px 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  align-items: center;
+}
+
+.lb-run-row--best {
+  background: rgba(250, 204, 21, 0.05);
+  border-color: rgba(250, 204, 21, 0.3);
+}
+
+.lb-run-rank  { font-size: 14px; font-weight: 800; color: var(--text-muted); }
+.lb-run-level { font-size: 15px; font-weight: 800; color: var(--text-primary); }
+.lb-run-seeds { font-size: 14px; font-weight: 700; color: var(--gold); }
+.lb-run-date  { font-size: 12px; color: var(--text-secondary); }
+
+/* Empty state */
+.lb-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 64px 32px;
+}
+
+.lb-empty-text {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--text-secondary);
+  letter-spacing: -0.5px;
+}
+
+.lb-empty-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+

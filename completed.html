@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Completed Projects — DeVenLucaz</title>
+  <meta name="description" content="Fully Shipped Projects by DeVenLucaz: llamdrop and MinePath." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%2300e5ff'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .research-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+    .research-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-xl);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+    }
+    .research-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+    .research-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      opacity: 0.8;
+    }
+    .accent-green::before { background: #00e676; }
+    .accent-orange::before { background: #ff9800; }
+    
+    .research-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 0.3rem 0.6rem;
+      border-radius: var(--radius-sm);
+      margin-right: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .accent-green .research-tag { color: #00e676; background: rgba(0, 230, 118, 0.1); }
+    .accent-orange .research-tag { color: #ff9800; background: rgba(255, 152, 0, 0.1); }
+    
+    .research-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    
+    .research-question {
+      font-style: italic;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      font-size: 1.15rem;
+    }
+
+    .research-body p {
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+    
+    .research-body h4 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+    }
+
+    .research-body ul {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+      color: var(--text-muted);
+    }
+
+    .research-body li {
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      margin-top: 1.5rem;
+      margin-right: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="main-nav">
+    <a href="index.html#hero" class="nav-logo">
+      <span class="logo-accent">DeVen</span>Lucaz
+    </a>
+    <div class="nav-links">
+      <a href="index.html#projects">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="research.html">RESEARCH</a>
+      <a href="daayan.html">DAAYAN</a>
+      <a href="https://github.com/DeVenLucaz" target="_blank" rel="noopener noreferrer" class="nav-external">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <div class="container" style="padding-top: 120px; padding-bottom: 80px;">
+    <span class="section-label reveal">FULLY SHIPPED</span>
+    <h1 class="hero-title reveal reveal-delay-1" style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1rem;">
+      <span>TOTAL 7</span>
+      <span style="color: var(--text-dim);"> | </span>
+      <span style="color: var(--accent);">COMPLETED 2</span>
+    </h1>
+    <p class="hero-subtitle reveal reveal-delay-2" style="max-width: 600px; text-align: left; margin: 0;">
+      These two projects have reached a stable, fully released state. They are live, actively maintained, and available for use right now.
+    </p>
+
+    <div class="research-grid">
+      
+      <!-- LLAMDROP -->
+      <div class="research-card accent-green reveal reveal-delay-1">
+        <span class="research-tag">Python</span>
+        <span class="research-tag">AI/LLM</span>
+        <span class="research-tag">v0.10.0</span>
+        <h2 class="research-title">llamdrop 🦙</h2>
+        <p class="research-question">Run AI on any device. No PC. No subscription. No struggle.</p>
+        
+        <div class="research-body">
+          <p>
+            llamdrop is a free, open-source tool that lets anyone run a local AI model on whatever device they own — an Android phone via Termux, an old laptop, a Raspberry Pi, or a budget PC. It reads your hardware automatically, detects your exact chip, RAM, and GPU, finds AI models that fit your specs, downloads them, and runs them. 
+          </p>
+          
+          <h4>Key Features (v0.10.0)</h4>
+          <ul>
+            <li><strong>Device Intelligence:</strong> Full device profiling with a 5-tier classification (Micro to High).</li>
+            <li><strong>Dynamic Backend Probing:</strong> Runs a 10-second micro-benchmark on first boot to guarantee the fastest and most stable backend (CPU vs GPU).</li>
+            <li><strong>Model Browser:</strong> Verified catalog curated for your specific hardware tier, plus live HuggingFace search.</li>
+            <li><strong>Auto-Healing Doctor:</strong> Repairs broken configs or corrupted binaries with a single keystroke.</li>
+            <li><strong>Focus:</strong> Dropped Desktop/macOS/Windows support to hyper-focus on Android, Linux, and SBCs.</li>
+          </ul>
+
+          <a href="https://github.com/DeVenLucaz/llamdrop" target="_blank" class="btn-outline">GitHub Repository</a>
+        </div>
+      </div>
+
+      <!-- MINEPATH -->
+      <div class="research-card accent-orange reveal reveal-delay-2">
+        <span class="research-tag">React + Vite</span>
+        <span class="research-tag">Capacitor</span>
+        <span class="research-tag">Game: V4</span>
+        <h2 class="research-title">MinePath 💣</h2>
+        <p class="research-question">One chicken. One minefield. No second chances.</p>
+        
+        <div class="research-body">
+          <p>
+            MinePath is a browser-based and mobile minesweeper survival game. Navigate a hidden minefield tile by tile, find the checkpoint, and get out before the timer runs out. Step on a mine — instant game over. 
+          </p>
+          
+          <h4>The Sanctuary Update (V4)</h4>
+          <ul>
+            <li><strong>The Sanctuary Hub:</strong> A persistent hub you build and grow over time, earning passive seed income.</li>
+            <li><strong>Skill Tree:</strong> Unlock 21 permanent passive abilities using Feather Points across four skill paths (Scout, Tank, Merchant, Skin-exclusive).</li>
+            <li><strong>Endless Mode:</strong> A brand new auto-scrolling tile runner across 5 themed worlds (Classic, Lava, Ice, Jungle, Galaxy).</li>
+            <li><strong>Hatchery & Eggs:</strong> Collect and incubate Brown, Blue, and Golden eggs to unlock pets and skins.</li>
+            <li><strong>Player Leveling:</strong> Earn XP by surviving to level up and unlock new skills.</li>
+          </ul>
+
+          <a href="https://DeVenLucaz.github.io/minepath/" target="_blank" class="btn-outline">Play Now in Browser</a>
+          <a href="https://github.com/DeVenLucaz/minepath/releases" target="_blank" class="btn-outline">Download APK</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

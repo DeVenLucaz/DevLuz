@@ -1,0 +1,169 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-body);
+  background: #030712;
+  color: var(--text-primary);
+  touch-action: manipulation;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.screen-base {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-gradient);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shared star layer — reusable on any screen */
+.screen-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.screen-star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s ease-in-out infinite alternate;
+  opacity: 0.5;
+}
+
+/* ===================================================
+   TOP BAR — v3 standardized header
+   =================================================== */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: var(--topbar-height);
+  background: var(--topbar-bg);
+  backdrop-filter: var(--topbar-blur);
+  -webkit-backdrop-filter: var(--topbar-blur);
+  border-bottom: 1px solid var(--card-border);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.topbar-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card-bg);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 8px 16px 8px 12px;
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.topbar-back:active {
+  transform: scale(0.95);
+  background: var(--card-bg-hover);
+}
+
+.topbar-back-arrow {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.topbar-back-text {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.topbar-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.topbar-title-letter {
+  font-family: var(--font-header);
+  font-size: clamp(12px, 4.5vw, 22px);
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  background: linear-gradient(to bottom, #FFFFFF 30%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+  line-height: 1;
+  display: inline-block;
+}
+
+.topbar-seeds {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  min-width: 80px;
+  justify-content: center;
+}
+
+.topbar-seeds-icon {
+  font-size: 16px;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.topbar-seeds-val {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.topbar-seeds-spacer {
+  min-width: 80px;
+}
+
+/* ===================================================
+   SCROLLBAR STYLING
+   =================================================== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+
+button {
+  touch-action: manipulation;
+  cursor: pointer;
+  font-family: var(--font-header);
+}

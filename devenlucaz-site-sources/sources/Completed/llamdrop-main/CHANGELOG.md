@@ -1,0 +1,383 @@
+# llamdrop Changelog
+
+## v0.10.0 — LTS Core Pivot
+
+### Engine & Diagnostics
+- **Dynamic Backend Probing**: llamdrop now runs a 10-second micro-benchmark with a 15M parameter dummy model during first run to automatically compare CPU vs. GPU (Vulkan) speeds, picking the fastest and most stable backend for the device.
+- **Independent Engine Updates**: Decoupled `llama.cpp` binary updates from the main app's python logic. Users can now selectively update the engine via the main menu `[Update Engine]` option.
+- **Auto-healing Doctor**: The `llamdrop doctor` now includes an auto-fix `[F]` key to automatically repair missing binaries, broken configs, and re-create directories when corrupted.
+
+### Power User Overrides
+- **Thermal & Battery Melt Bypass**: Added `allow_thermal_melt` to config.json. When enabled, it suppresses low-battery warnings and allows users to push their device to the absolute limit without the app blocking inference.
+- **Backend Forcing**: Users can now manually override the probed backend via config.json (`"backend": "vulkan"` or `"cpu"`).
+- **Show Unsupported Models**: Added `[U]` toggle in the model browser to unhide models that exceed available RAM, giving power users the choice to use aggressive swap space if they desire.
+
+### Content & Discovery
+- **Dynamic Catalog Overhaul**: `models.json` now fetches updates in the background on launch, ensuring users always have the newest catalog without a full app update.
+- **Catalog Pruning & Expansion**: Removed Qwen2.5 0.5B, Gemma 2 2B, Phi-3 Mini 3.8B, Phi-3.5 Mini 3.8B, and Qwen3.5 4B to keep the catalog focused. Added the brand new ultra-light Qwen3 0.6B for fast reasoning on budget hardware. Removed models aimed at 24GB+ desktop tiers. Catalog focuses strictly from Micro up to High tiers (16GB), adding `Provider` fields to all models.
+- **TUI Filters Overhaul**: Upgraded the model browser to support `Provider` filtering (via `[P]`) on top of Categories `[C]`.
+- **Search Improvisation**: `hf_search.py` now accepts direct HuggingFace file URLs (e.g. `https://huggingface.co/user/repo/resolve/main/file.gguf`) to bypass searching entirely. Live search sorts by `trendingScore`.
+
+### Trimming & Focusing
+- **Dropped Windows and macOS Support**: Removed `install.ps1`, WMI/macOS hardware polling from Python backend (`device.py`, `specs.py`), OS-specific logic from `install.sh`, and deleted all Windows/macOS GitHub testing workflows (`test-windows.yml`, `test-macos.yml`).
+- **Cleaned Up Repo Root**: Removed unused GitHub issue templates (`bug_report.yml`).
+- **Dropped Desktop Tier**: Removed "Desktop" and "Workstation" (24GB+) tier logic from core configuration to heavily focus on Micro (under 1GB) to High (16GB+) hardware.
+
+### Bug Fixes
+- **Model Scanner**: Fixed a bug where the `dummy_benchmark.gguf` file would appear in the user's "My downloaded models" list.
+- **Tests**: Fixed `test_specs.py` to remove deprecated `Tier.DESKTOP` and `Tier.WORKSTATION` references, aligning with the v0.10.0 tier removal.
+- **Browser Crash**: Fixed an `AttributeError` crash when opening the Model Browser caused by a malformed dict structure in `models.json`.
+- **Main Menu UI**: Fixed the main menu header showing "Unknown - 1 cores" by properly mapping the new `DeviceProfile` object into the legacy UI formatting logic.
+- **Model Details UI**: Fixed a bug where `best_for` model attributes were rendered with terrible comma-spacing by removing an accidental `", ".join()` on strings.
+- **Catalog Cap**: Removed Phi-4 14B from `models.json` as it exceeded our new Extended tier cap.
+- **Catalog Synchronization**: Fixed an issue where the app would prefer a stale `~/.llamdrop/models.json` cache over a newly pulled bundled copy. It now strictly favors the file with the most recent modification time.
+## v0.9.5 — previous
+
+### Core Audit & Logic Unification
+Unified all RAM monitoring logic into `modules/specs.py`. This eliminates duplication across `chat.py`, `downloader.py`, and `ram_monitor.py`, ensuring consistent memory reporting throughout the application.
+
+### Fixed Inference UI Blocking
+Refactored the model output collection in `modules/chat.py` to be non-blocking. The "Thinking..." animation now runs smoothly even on single-core devices by ensuring the Python GIL is released regularly during inference.
+
+### Ollama First-Class Backend
+Ollama integration is now hardware-aware. The Ollama backend now respects the `DeviceProfile` and auto-tunes threads, context size, and batch size to match the native `llama.cpp` experience.
+
+### Formal Testing Suite
+Added the first formal unit tests for the project under `tests/`. Coverage includes hardware tier classification, optimal thread selection, and prompt building for various model formats (ChatML, Llama 3, Gemma, Phi).
+
+### Diagnostic Partial Download Cleanup
+`llamdrop doctor` now includes a `--cleanup` flag (and a recommendation in the health report) to scan and remove incomplete `.gguf` downloads. This helps users recover storage from failed or cancelled downloads easily.
+
+### GitHub Migration
+Project-wide update of all URLs from the old `ypatole035-ai/llamdrop` to the new official home at `DeVenLucaz/llamdrop`.
+
+## v0.9.4
+
+### Config editor — edit settings from inside llamdrop
+
+The Settings screen was read-only. It showed your current values and said "edit the file manually." Now it's a full interactive editor. Type the number of any setting to edit it, enter a new value, and llamdrop validates the range and type before saving. Type `auto` on any setting to remove your override and let llamdrop auto-detect it again. `[R]` resets everything to defaults. `[B]` goes back. You never need to touch `config.json` by hand.
+
+### Doctor — major diagnostic improvements
+
+The doctor command now catches significantly more problems and explains them clearly.
+
+**Binary check shows real errors.** When `llama-cli` fails to run, doctor now prints the actual stderr output — missing `.so` libraries, wrong architecture, permission errors — instead of just saying "failed to run."
+
+**Self-test added.** Doctor now runs `llama-cli --help` as a functional test. Binary present and executable does not mean it actually works — a corrupted file or wrong architecture will pass the file check but fail the self-test.
+
+**RAM check shows zram and swap.** On Android, zram is active on most devices and meaningfully extends usable RAM. Doctor now shows zram free/total and an effective RAM estimate (RAM + 60% zram weight) so you know your real headroom.
+
+**Network check split into GitHub and HuggingFace.** Previously one check against GitHub. Now checks both separately — GitHub for updates/install, HuggingFace for model downloads and search. If HuggingFace is blocked or down, doctor flags it specifically.
+
+**Termux storage explains what breaks.** Previously just said "run termux-setup-storage." Now explains that model scanning, chat export to Downloads, and external GGUF detection all stop working without storage permission.
+
+**Partial download detection.** Doctor now scans the models directory for `.gguf` files under 50MB — these are orphaned partial downloads from cancelled transfers. Shows the filename, size, and the exact command to delete or re-download each one.
+
+**Config validation.** Doctor now reads `config.json` and validates every key against the schema — wrong types, out-of-range values, unknown keys, and corrupted JSON are all caught and reported with a specific fix for each.
+
+**Summary is complete.** Ollama failures, Termux storage issues, partial model files, and config problems now appear in the final summary. Previously only binary, RAM, storage, directories, catalog, network, and Python were included.
+
+### Bug fixes
+
+**`/ram` command in chat now works correctly.** It was passing the device profile object to `ram_status_line()` instead of a live RAM float, so it always showed 🟢 regardless of actual RAM. Fixed — it now reads live RAM and shows the correct colour.
+
+**Downloader variant picker now includes Q6_K and Q8_0.** The preference order in `smart_pick_variant()` was missing Q6_K, Q8_0, and Q5_K_S — same bug that was fixed in the HF search in v0.9.2, now fixed in the downloader too. Selecting a Q6 model in the browser would silently download Q4 instead.
+
+**Download progress bar now shows ETA.** The progress bar showed speed but not estimated time remaining. Now shows `ETA 1m23s` alongside the download speed.
+
+**Exported chat filenames include the model name.** Exports were saved as `llamdrop-chat-20260506_123456.md`. Now saved as `llamdrop-qwen2.5-3b-20260506_123456.md` so files are identifiable in Downloads.
+
+**HF search query normalized before sending.** Extra whitespace and mixed case in search queries were reducing API results. Queries are now stripped and lowercased before hitting the HuggingFace API.
+
+**Quant preference order synced across all three files.** `browser.py` and `downloader.py` pref orders now match `hf_search.py` — Q8_0, Q6_K, Q5_K_S included in all three so the same model gets the same variant everywhere.
+
+---
+
+## v0.9.2
+
+### HuggingFace search — bug fixes and UX improvements
+
+**Q6, Q8, and Q5_K_S models no longer return "No compatible models found"**
+
+The HuggingFace live search was silently dropping any repo whose only available quantizations were Q6_K, Q8_0, or Q5_K_S. These were missing from the internal preference order list, so the search would find the repo, inspect its files, find no matching quant, and discard the whole result — even though a perfectly good file was right there. Affected every search for higher-quality quantizations. All missing quant levels are now included, ordered highest quality first: Q8_0 → Q6_K → Q5_K_M → Q5_K_S → Q5_K → Q4_K_M and down.
+
+**Models just slightly over the RAM limit no longer vanish silently**
+
+The RAM filter had zero tolerance — if the smallest available variant needed even 0.1 GB more than your free RAM, the model disappeared from results entirely with no explanation. Models within 15% of your available RAM now appear with a "Tight on RAM" warning instead of being hidden. This is consistent with how the main verified catalog already handles marginal models.
+
+**Search screen now has a dedicated back option**
+
+Previously there was no way to exit the HuggingFace search screen without typing something and hitting Enter. The prompt now shows `[B] Back to main menu` before you type anything. Typing `b` or pressing Enter on an empty input returns you to the menu cleanly.
+
+**Search again without going back to the main menu**
+
+After results were shown and you closed the model browser (Q or Esc), llamdrop would silently exit the search flow and drop you back at the main menu. You had to navigate back in and type your query again. Now after closing the browser you get a clear `[S] Search again` / `[B] Back` prompt. Your last search query is shown on screen so you know where you left off. Same prompt appears when a search returns no results.
+
+**Result count shown before browser opens**
+
+The search would say "Searching HuggingFace..." and then jump straight into the curses browser. Now it shows `Found N compatible model(s). Opening browser...` for a moment before opening, so you know whether you got 1 result or 15 before the screen switches.
+
+---
+
+## v0.9.1
+
+### Bugfix — app crashed on launch after update
+
+- llamdrop was crashing immediately after the v0.9.1 update with a `TypeError` on startup
+- The device info reader was expecting data in one format but was receiving it in another
+- Fixed so llamdrop now opens normally without any crash
+
+### Windows CI — automated installer validation
+
+- Windows GitHub Actions workflow now runs on every push to main
+- PowerShell installer (`install.ps1`) is validated for existence, size, and syntax automatically
+- All Python source files are syntax-checked on a real Windows runner via `py_compile`
+- `models.json` and `llamdrop.py` VERSION are verified on Windows on every commit
+- Fixed Unicode characters in `install.ps1` that caused PowerShell tokenizer failures (`—`, `─`, `━`, `·` replaced with ASCII equivalents)
+- Fixed Windows Python encoding — `PYTHONUTF8=1` and explicit `encoding='utf-8'` on all file reads, preventing `cp1252` codec errors
+- No more manual Windows testing needed for installer and syntax validation
+
+## v0.9.0
+
+### Stability release — all fixes from v0.8.6 through v0.8.9
+
+- Chat output pipeline fully cleaned: no banner bleed, no duplicate responses, no leaked meta lines
+- Model browser is now device-aware — shows only models that fit your hardware
+- Catalog expanded from 38 to 41 models
+- Background model scanning — UI no longer freezes on My Models screen
+- RAM reads consolidated, startup hardware detection runs once instead of three times
+- Smarter context trimming — preserves first exchange when shortening history
+
+---
+
+## v0.8.9 
+
+### Chat output fixes — banner, duplicate responses, and leaked meta lines
+
+No new features. All fixes are in the chat response pipeline.
+
+**The llama.cpp banner no longer appears in chat**
+
+On certain llama.cpp builds, the startup banner — build hash, model name, and the available commands list (`/exit`, `/regen`, `/clear`, etc.) — was printing directly into the chat window as if it were part of the model's response. This happened because the prompt was being passed via stdin, and some builds on Android ignore stdin in single-turn mode and fall into interactive mode instead. The prompt is now passed via the `-p` flag, which is the canonical non-interactive method and works on all builds. The banner is gone.
+
+**Responses no longer print twice**
+
+With the `-p` flag, llama.cpp appends a timing stats line and then repeats the response at the end of its output — `[ Prompt: 125.5 t/s | Generation: 29.3 t/s ]` followed by the response text again. llamdrop was collecting everything including the duplicate. Now it stops collecting as soon as it hits the stats line. Only the first, clean response is shown.
+
+**Timing stats, "Exiting...", and format tags no longer leak into responses**
+
+Three types of llama.cpp output were showing up in chat: the `[ Prompt: X t/s | Generation: Y t/s ]` timing line, the `Exiting...` exit message, and leftover `<|im_start|>` / `<|im_end|>` chatml boundary tags. These are now recognised as llama.cpp meta output and stripped cleanly. They never appear as response content regardless of where they fall in the raw output.
+
+---
+
+## v0.8.8
+
+### Under the hood — downloader and startup cleanup
+
+No new features. Two existing things work better.
+
+**The "My Models" scan no longer freezes the screen**
+
+When you opened the My Downloaded Models screen, llamdrop was walking through your storage directories — Downloads, Documents, sdcard — on the main thread. On slow Android storage or folders with lots of files, the app would freeze with a static `Scanning...` message and no feedback. The scan now runs in the background while a live counter updates on screen (`Scanning... 3 found`). The UI stays responsive the whole time.
+
+**Auto-save intent is now explicit in the code**
+
+The auto-save threshold was a magic number `10` buried in the chat loop with a comment that said "every 10 messages" — but it was actually counting both user and assistant turns, so it saved every 5 exchanges, not 10. The number is now a named constant `_AUTOSAVE_EVERY_TURNS = 10` with a clear explanation, and the help text was updated to match: "auto-saves every 5 exchanges (10 messages)".
+
+---
+
+## v0.8.7
+
+### Under the hood — chat, browser, and RAM improvements
+
+No new features. Existing features working smarter and faster.
+
+**Startup runs hardware detection once instead of three times**
+
+llamdrop was running its full hardware detection routine three separate times on every launch — once for the main profile, once for the first-run welcome screen, and once for the GPU check. Each run fired subprocess calls to `getprop`, `lspci`, `nvidia-smi`, and friends. Now it runs exactly once and the result is passed through everywhere. On slower devices this is a noticeable improvement.
+
+**RAM reads consolidated to one shared function**
+
+`/proc/meminfo` was being read independently in `specs.py`, `chat.py`, and `downloader.py` with slightly different implementations. There is now one shared `read_available_ram_gb()` in `specs.py` that the other modules import. Inside the chat loop, RAM is read once per turn and passed through to every function that needs it instead of each reading it separately.
+
+**Chatting with long conversations is faster**
+
+Every time you sent a message, llamdrop was rebuilding the entire conversation prompt from scratch — looping through all turns and re-serialising kilobytes of unchanged text. Now it keeps an incremental buffer and appends only the new turn. Full rebuild only happens when context is trimmed.
+
+**Context trimming is smarter**
+
+When RAM gets low and llamdrop shortens the conversation, it used to cut from the tail — keeping only the last N turns. That could silently delete the opening exchange where you set up the task or persona. Now it always keeps the first exchange and the most recent turns, deleting from the middle. Your original intent is preserved.
+
+**Prompts no longer touch the disk on Android**
+
+On every message, llamdrop was writing the full prompt to a temporary file on flash storage then deleting it after inference. The prompt is now passed via stdin instead — no disk write, no cleanup on every response.
+
+**Model responses can no longer be silently corrupted**
+
+llamdrop was applying a noise filter (lines starting with `llama_`, `ggml_`, etc.) to the model's stdout. If a model produced a real response containing one of those prefixes — a code snippet, a log file — that line was silently deleted. The noise filter now only applies to stderr where the actual noise comes from. Stdout is passed through untouched.
+
+**Category switching in the model browser is now instant**
+
+Pressing C to filter by category was re-running the full device compatibility check on every keypress — tier gates, RAM gates, variant picking across all 38 models. The check now runs once when the browser opens and the result is cached. Category switching is a plain in-memory slice with no repeated RAM reads.
+
+---
+
+## v0.8.6
+
+### Cancelled downloads no longer show as valid models
+
+- **Cancelled download would appear as a working model** — if you cancelled a download halfway through, the partial file stayed on disk. llamdrop would then show it in "My Downloaded Models" looking exactly like a complete model. Selecting it and sending your first message would cause a crash because llama-cli hit the truncated end of the file. Three things were fixed to close this completely:
+  - When you cancel a download (Ctrl+C), the partial file is now immediately deleted. You'll see a confirmation message. If deletion fails, it tells you the exact path to remove manually.
+  - The "My Downloaded Models" screen now ignores any `.gguf` file under 50MB. Real models are never that small — anything under 50MB is guaranteed to be an incomplete file. It stays on disk so downloading it again will resume from where it left off, but it won't show up in your list.
+  - The "already downloaded" green tick in the model browser now also checks file size before showing. Previously it only checked if the file existed, so a partial file would show as fully downloaded.
+
+---
+
+### The model list now knows what device you have
+
+Before this update, everyone saw the same list of models — a 135M tiny model would show up on a MacBook, and a 70B massive model would show up on a phone. That made no sense. Now llamdrop shows you only the models that actually make sense for your device.
+
+**More models added:**
+The catalog grew from 25 to 38 models. We added proper options for mid-range laptops, high-end MacBooks, gaming PCs, and workstations — not just phones. New additions include Llama 3.1 8B, Qwen3 8B, Phi-4 14B, Gemma 3 27B, Qwen3 32B, Llama 3.3 70B, and more.
+
+**Smarter filtering:**
+Every model now has a minimum and maximum device level it's meant for. When you open the browser, llamdrop checks what kind of device you are on and hides models that are too small to be useful or too large to ever run. Two checks happen: first it filters by device level, then it checks your available RAM.
+
+**Browser header updated:**
+The top bar in the model browser now shows your device level (like "High (12–24GB)") so you always know where you stand.
+
+---
+
+## v0.8.5
+
+### Bug fixes — things that were just broken
+
+- **App wouldn't open after an update** — a wrong file ended up in the wrong place during one of the updates, so llamdrop would crash immediately on launch. Fixed.
+- **The thinking spinner was frozen** — when the model was generating a response, the little 🦙 Thinking... animation was supposed to spin but it was completely frozen. Fixed by changing how we read the model's output in the background.
+- **Same frozen spinner on retry** — when llamdrop tried a second attempt with an older version of the engine, the spinner froze there too. Same fix applied.
+- **GPU detection was wrong on some Android phones** — some phones have Mali GPU hardware but no working GPU driver for AI. llamdrop was incorrectly saying GPU was available on these phones, which caused crashes. Now it checks properly before claiming GPU works.
+- **Clearing chat broke auto-save** — if you typed `/clear` to wipe the conversation, the next auto-save would be delayed much longer than expected. Fixed.
+
+---
+
+## v0.8.1
+
+### More bug fixes — a big cleanup pass
+
+- **Resuming a download could corrupt the file** — if you paused a download and resumed it, sometimes the server would send the whole file again from the beginning instead of continuing where it left off. llamdrop would blindly append it, making a broken file. Now it detects this and restarts cleanly.
+- **Storage check was too generous** — when checking if you have enough space, llamdrop was assuming models needed less space than they actually do. Raised the estimate so it doesn't let you start a download you can't finish.
+- **Auto-save would sometimes skip** — after trimming old conversation history, the auto-save counter could get confused and skip saving for a long time. Fixed.
+- **Gemma models cut off their own responses** — if a Gemma model happened to say a certain phrase in its response, llamdrop would mistake it for the end of the prompt and chop the rest of the answer off. Fixed.
+- **Speed scores weren't recording on newer versions** — the tokens-per-second benchmark wasn't being captured on newer versions of the AI engine because the output format changed. Now handles both old and new formats.
+- **GPU detection was wrong on Snapdragon phones** — same issue as v0.8.5 Mali fix but for Qualcomm Adreno GPUs. The phone has the hardware but the driver isn't usable for AI. Fixed.
+- **Self-update installed to the wrong folder** — if you installed llamdrop somewhere other than the default location, running `llamdrop update` would update the wrong copy. Fixed.
+- **Config changes weren't picked up** — if you edited your settings file while llamdrop was running, the changes wouldn't take effect until you restarted. Now it notices when the file changes and reloads automatically.
+- **A hidden crash when searching HuggingFace** — a module was being loaded too late in the code, which could cause a silent crash in certain situations. Moved it to the right place.
+- **Menu items could trigger the wrong action** — menu options were tracked by their position number, so adding or removing one item would shift everything below it and break all the shortcuts. Now tracked by icon instead of position.
+- **RAM estimate was too optimistic** — llamdrop was underestimating how much RAM a model needs, which meant some models that shouldn't fit were being shown as compatible. Made the estimate more conservative.
+- **Battery icon was always the same** — no matter how low your battery was (as long as it was above 15%), it always showed the same 🔋 icon. Now shows different icons for different charge levels.
+- **Missing translations weren't reported** — if a language translation was incomplete, llamdrop would silently fall back to English for missing phrases with no warning. Now it tells you which phrases are missing.
+- **No file verification on download** — the installer was downloading the AI engine binary without checking if it arrived intact. Now verifies the file against a checksum and refuses to install a corrupted file.
+
+---
+
+## v0.8.0
+
+### llamdrop now properly understands your hardware
+
+This was a big one. Before this update, llamdrop had a rough idea of your device but made a lot of guesses. Now it properly reads your hardware and makes smart decisions based on what it finds.
+
+**What it detects now:**
+- Exactly what platform you're on — Android, Mac (Apple chip or Intel), Windows via WSL, Raspberry Pi, or various Linux distros
+- How much RAM you have and how much is actually free, including zram/swap on Android
+- Your CPU chip name (knows 80+ Android chip names), how many cores, and which ones are the fast ones
+- Whether your GPU can actually be used for AI (many Android GPUs cannot — they're slower than CPU for this)
+- How much storage you have free
+
+**What it decides based on that:**
+- Which AI engine to use — the right one for your setup (Nvidia GPU, Mac chip, CPU-only, etc.)
+- How many CPU threads to use — on phones with mixed fast/slow cores, it only uses the fast ones
+- How much memory to give the AI for conversation history
+- Whether to use GPU acceleration at all (Android GPU is almost always disabled on purpose — it's actually slower)
+
+**New device info screen:**
+You can now see a full breakdown of what llamdrop detected about your device and why it made each decision. No more guessing.
+
+**Windows installer added:**
+A proper PowerShell installer for Windows that detects your GPU and downloads the right version automatically.
+
+**Mac support improved:**
+Apple Silicon Macs now use Ollama with Metal acceleration by default, which is the fastest option available.
+
+---
+
+## v0.7.0
+
+### Smarter settings and new platform support
+
+- **Better thread count on phones** — previously llamdrop just divided your total cores by 2, which was wrong for most phones. Now it knows which cores are the fast ones for 30+ phone chips and only uses those.
+- **Much more conversation memory** — the amount of conversation llamdrop could remember was set way too low (sometimes only 2 exchanges on low-RAM phones). Raised significantly across all device types.
+- **Device categories** — llamdrop now classifies your device into a category (ultra low / low / mid / high / desktop) and uses that to pick the right settings automatically.
+- **Welcome screen on first launch** — the first time you run llamdrop, it shows you what it detected about your device and which models it recommends you download. Only shows once.
+- **Ollama support** — if you have Ollama running on your Linux or desktop machine, llamdrop can use it automatically. A new Ollama Chat option appears in the menu when it's detected.
+- **More model size options** — added extra compressed versions of models that use less RAM but have slightly lower quality. Useful for getting bigger models to fit on tighter devices.
+- **Models use less RAM when stored internally** — models stored in llamdrop's own folder now load more efficiently, using 15–30% less RAM during a conversation.
+
+---
+
+## v0.6.1
+
+Small fixes for battery display, settings loading, chat export, and the update command writing to the wrong place.
+
+---
+
+## v0.6.0
+
+### Useful everyday improvements
+
+- **Models work correctly out of the box** — different AI models expect prompts to be formatted in different ways. llamdrop now handles this automatically per model, so you don't need to think about it.
+- **Settings file** — you can now create a settings file to customise things like how many tokens the model can use, the temperature (how creative responses are), and your own system prompt.
+- **Export your chat** — type `/export` during a conversation and it saves the whole thing as a readable text file in your Downloads folder.
+- **Battery warning** — shows your battery level and how much each AI response drains it. Warns you if battery gets too low before you start chatting.
+- **Filter models by type** — press C in the model browser to filter by category: chat, coding, reasoning, multilingual, etc.
+
+---
+
+## v0.5.0
+
+### Maintenance and visibility tools
+
+- **Update command** — run `llamdrop update` to pull the latest version directly from GitHub without reinstalling.
+- **Doctor command** — run `llamdrop doctor` to check if everything is installed correctly. It checks the AI engine, libraries, RAM, storage, internet connection, and Python.
+- **Speed scores** — llamdrop now measures how fast each model responds (tokens per second) and shows it in the browser next to each model so you can compare.
+
+---
+
+## v0.4.0
+
+### Big feature push for Android users
+
+- **Finds models you already have** — scans your Downloads, Documents, and other common folders for AI model files you may have downloaded elsewhere. You can use them directly without re-downloading.
+- **Picks the right file size automatically** — at download time, llamdrop checks how much RAM you have right now and picks the best model size that will actually fit.
+- **GPU acceleration** — detects if your Android phone has a compatible GPU and uses it to speed up responses where possible.
+- **RAM warnings during chat** — shows a live colour-coded RAM indicator while you chat. Goes yellow when RAM is getting low, red when it's critical.
+- **Auto-shrinks conversation to prevent crashes** — if RAM gets critically low during a conversation, llamdrop automatically removes old messages to free up space so it doesn't crash.
+- **Animated thinking indicator** — shows a 🦙 Thinking... animation while the model is generating a response so you know it's working.
+- **Delete saved sessions** — you can now delete old saved conversations from the resume screen.
+- 18 models in the catalog.
+
+---
+
+## v0.3.0
+
+### The beginning
+
+- One command installs everything — downloads the AI engine, sets up the folders, and gets you ready to chat.
+- Curated list of verified models that are known to work well.
+- Search HuggingFace directly from within llamdrop to find any AI model you want.
+- Downloads resume if interrupted and retry automatically on failure.
+- Detects your device and translates chip codes into readable names (e.g. SM8550 → Snapdragon 8 Gen 2).
+- Arrow-key model browser to pick and download models.
+- Save conversations and resume them later.
+- Available in English, Hindi, Spanish, and Portuguese.
+

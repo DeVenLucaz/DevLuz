@@ -1,0 +1,286 @@
+.shop-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-gradient);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+
+/* Toast notification */
+.sp-toast {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(251, 191, 36, 0.95);
+  backdrop-filter: blur(8px);
+  color: #030712;
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-family: var(--font-header);
+  font-weight: 800;
+  font-size: 13px;
+  z-index: 100;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
+  animation: toastIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ── TAB BAR ── */
+.sp-tabs {
+  display: flex;
+  padding: 12px 16px 8px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.sp-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--btn-radius);
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 56px;
+}
+
+.sp-tab--active {
+  background: rgba(251, 191, 36, 0.08);
+  border-color: rgba(251, 191, 36, 0.4);
+  color: var(--gold);
+  box-shadow: 0 4px 16px rgba(251, 191, 36, 0.1);
+  transform: translateY(-1px);
+}
+
+.sp-tab-icon  { display: flex; align-items: center; justify-content: center; }
+.sp-tab-label { font-family: var(--font-header); font-size: 9px; font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; }
+
+/* ── SCROLLABLE LIST ── */
+.sp-list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  -webkit-overflow-scrolling: touch;
+  z-index: 2;
+}
+
+/* ── ITEM CARD ── */
+.sp-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  padding: 12px 14px;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.sp-card--equipped {
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3), inset 0 0 12px rgba(16, 185, 129, 0.03);
+}
+
+.sp-card:active {
+  transform: scale(0.99);
+}
+
+/* Skin art box */
+.sp-card-art {
+  width: 76px;
+  height: 76px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.sp-card-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04), transparent 70%);
+}
+
+/* Card text */
+.sp-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sp-card-name {
+  font-family: var(--font-header);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sp-card-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.sp-bonus-label {
+  font-family: var(--font-header);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sp-equipped-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-header);
+  font-size: 10px;
+  font-weight: 900;
+  color: var(--accent-green);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── ACTION BUTTONS ── */
+.sp-btn {
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--btn-radius);
+  font-family: var(--font-header);
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 80px;
+  min-height: 44px;
+}
+
+.sp-btn:active { transform: scale(0.95); }
+
+.sp-btn--equipped {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: var(--accent-green);
+  font-size: 16px;
+  min-width: 48px;
+}
+
+.sp-btn--equip {
+  background: var(--card-bg);
+  color: var(--text-primary);
+  border-color: var(--card-border);
+}
+.sp-btn--equip:active {
+  background: var(--card-bg-hover);
+}
+
+.sp-btn--buy {
+  background: linear-gradient(135deg, var(--gold), #CA8A04);
+  color: #030712;
+  box-shadow: var(--btn-shadow-gold);
+  border: none;
+  padding: 0 10px;
+}
+
+.sp-btn-seed { font-size: 14px; line-height: 1; }
+
+/* ── TILE PREVIEW ── */
+.sp-tile-preview {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 8px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.sp-tp-tile {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-header);
+  font-size: 10px;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* ── TRAIL PREVIEW ── */
+.sp-trail-preview {
+  width: 76px;
+  height: 76px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.sp-trail-none {
+  font-family: var(--font-header);
+  font-size: 18px;
+  color: var(--text-muted);
+  font-weight: 800;
+}
+
+.sp-trail-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sp-trail-dot {
+  border-radius: 50%;
+  animation: trailPulse 1.2s ease-in-out infinite alternate;
+}
