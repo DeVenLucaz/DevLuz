@@ -20,7 +20,12 @@ function Router() {
 }
 
 function App() {
-  const routerBase = import.meta.env.BASE_URL.replace(/\/$/, "");
+  const getBasePath = () => {
+    const path = window.location.pathname;
+    const match = path.match(/^(.*\/llamdrop)/i);
+    return match ? match[1] : "";
+  };
+  const routerBase = getBasePath();
 
   useEffect(() => {
     document.documentElement.classList.add('dark');
