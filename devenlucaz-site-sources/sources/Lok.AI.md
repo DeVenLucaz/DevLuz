@@ -96,7 +96,7 @@ ABI targets: `arm64-v8a` (primary), `armeabi-v7a` (secondary)
 ## Build from source
 
 ```bash
-git clone --recursive https://github.com/ypatole035-ai/Lok.AI
+git clone --recursive https://github.com/DeVenLucaz/Lok.AI
 cd Lok.AI
 ./gradlew assembleDebug
 ```

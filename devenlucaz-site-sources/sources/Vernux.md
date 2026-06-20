@@ -237,7 +237,7 @@ Supported providers out of the box:
 
 ### Option 2 — Local model (fully offline)
 
-Run AI on your phone with no internet, no API, no cost. Requires [llamdrop](https://github.com/ypatole035-ai/llamdrop) to be installed — VERNUX uses llamdrop's binary and models directly, so there's no duplication if you already have it.
+Run AI on your phone with no internet, no API, no cost. Requires [llamdrop](https://github.com/DeVenLucaz/llamdrop) to be installed — VERNUX uses llamdrop's binary and models directly, so there's no duplication if you already have it.
 
 ```bash
 # Install llamdrop first, then:
@@ -267,7 +267,7 @@ AI-generated commands always go through safety classification and require your c
 | Python | 3.8+ — `pkg install python3` |
 | Storage | ~50MB for VERNUX + ~1GB if you want a local AI model |
 | Internet | Only for install and `vernux update` — runs fully offline after |
-| llamdrop | Optional — needed only for local AI model ([install](https://github.com/ypatole035-ai/llamdrop)) |
+| llamdrop | Optional — needed only for local AI model ([install](https://github.com/DeVenLucaz/llamdrop)) |
 
 ---
 
